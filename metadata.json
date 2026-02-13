@@ -1,0 +1,8 @@
+{
+  "name": "Cinematic Portfolio Pro",
+  "description": "A high-end, cinematic web portfolio featuring interactive project demos, sleek animations, and enhanced security layers for professional client showcasing.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
