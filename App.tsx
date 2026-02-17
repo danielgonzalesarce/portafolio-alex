@@ -11,7 +11,7 @@ import InternalPage from './components/InternalPage';
 import WhatsAppButton from './components/WhatsAppButton';
 import { Project } from './types';
 
-export type ViewState = 'main' | 'archivos' | 'taquilla' | 'imax' | 'clasificados' | 'seguridad' | 'terminos';
+export type ViewState = 'main' | 'archivos' | 'taquilla' | 'imax' | 'clasificados' | 'seguridad' | 'terminos' | 'equipo';
 
 const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);

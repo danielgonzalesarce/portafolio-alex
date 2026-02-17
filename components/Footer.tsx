@@ -34,12 +34,11 @@ const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
 
           <div className="grid grid-cols-2 gap-20">
             <div>
-              <p className="text-red-marvel font-black text-xs uppercase tracking-[0.5em] mb-8 underline decoration-2 underline-offset-8">Departamentos</p>
+              <p className="text-red-marvel font-black text-xs uppercase tracking-[0.5em] mb-8 underline decoration-2 underline-offset-8">Navegación</p>
               <ul className="space-y-4 font-impact text-3xl uppercase text-white tracking-tighter">
-                <li><button onClick={() => onViewChange('archivos')} className="hover:text-red-marvel transition-colors italic">Los Archivos</button></li>
-                <li><button onClick={() => onViewChange('taquilla')} className="hover:text-red-marvel transition-colors italic">Taquilla</button></li>
+                <li><button onClick={() => onViewChange('main')} className="hover:text-red-marvel transition-colors italic">Inicio</button></li>
+                <li><button onClick={() => onViewChange('equipo')} className="hover:text-red-marvel transition-colors italic">Nuestro Equipo</button></li>
                 <li><button onClick={() => onViewChange('imax')} className="hover:text-red-marvel transition-colors italic">Tecnología IMAX</button></li>
-                <li><button onClick={() => onViewChange('clasificados')} className="hover:text-red-marvel transition-colors italic">Clasificados</button></li>
               </ul>
             </div>
             <div>

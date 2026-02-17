@@ -46,10 +46,8 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
   };
 
   const navLinks = [
-    { name: 'ARCHIVOS', view: 'archivos' as ViewState },
-    { name: 'TAQUILLA', view: 'taquilla' as ViewState },
-    { name: 'IMAX', view: 'imax' as ViewState },
-    { name: 'CLASIFICADOS', view: 'clasificados' as ViewState },
+    { name: 'HOME', view: 'main' as ViewState },
+    { name: 'EQUIPO', view: 'equipo' as ViewState },
   ];
 
   return (

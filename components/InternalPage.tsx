@@ -11,6 +11,91 @@ interface InternalPageProps {
 const InternalPage: React.FC<InternalPageProps> = ({ view, onClose }) => {
   const renderContent = () => {
     switch (view) {
+      case 'equipo':
+        return (
+          <div className="space-y-12 md:space-y-20">
+            <h2 className="text-7xl md:text-[10rem] font-impact uppercase italic leading-none text-white tracking-tighter">
+              NUESTRO <span className="text-red-marvel">STAFF</span>
+            </h2>
+            
+            <div className="flex flex-col lg:flex-row gap-12 items-center lg:items-start bg-zinc-900/40 p-8 md:p-12 border border-white/5 rounded-3xl relative overflow-hidden group">
+               {/* Decorative background element */}
+               <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                  <span className="font-impact text-9xl text-white italic">EDITOR</span>
+               </div>
+
+               {/* Photo Section */}
+               <div className="relative w-full max-w-sm aspect-square">
+                  <div className="absolute inset-0 bg-red-marvel/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                  <div className="relative h-full w-full rounded-2xl overflow-hidden border-4 border-zinc-800 group-hover:border-red-marvel transition-colors bg-zinc-950">
+                     {/* Placeholder loading effect */}
+                     <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                        <div className="w-full h-full bg-[radial-gradient(circle,rgba(226,54,54,0.2)_1px,transparent_1px)] bg-[size:20px_20px] animate-[pulse_3s_infinite]"></div>
+                     </div>
+                     
+                     <img 
+                        src="https://github.com/danielgonzalesarce.png" 
+                        alt="Daniel Gonzales Arce" 
+                        className="relative z-10 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=800&auto=format&fit=crop";
+                        }}
+                     />
+                     
+                     {/* HUD Overlay on image */}
+                     <div className="absolute inset-0 border-[20px] border-black/20 pointer-events-none z-20"></div>
+                     <div className="absolute bottom-4 left-4 z-30 bg-red-marvel text-white text-[8px] font-black px-2 py-1 uppercase tracking-widest italic shadow-xl">
+                        ID: DG-001
+                     </div>
+                  </div>
+               </div>
+
+               {/* Info Section */}
+               <div className="flex-1 space-y-8 relative z-10 text-center lg:text-left">
+                  <div>
+                    <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+                      <span className="w-2 h-2 bg-red-marvel rounded-full animate-pulse"></span>
+                      <span className="text-red-marvel font-black text-xs uppercase tracking-[0.5em] block">AUTORIZADO: ACCESO NIVEL 5</span>
+                    </div>
+                    <h3 className="text-5xl md:text-7xl font-impact text-white uppercase italic leading-none tracking-tighter">
+                      DANIEL ALEXANDER <br/>GONZALES ARCE
+                    </h3>
+                    <p className="text-zinc-500 font-impact text-2xl uppercase mt-2 tracking-tighter">EDITOR EN JEFE / FULLSTACK ARCHITECT</p>
+                  </div>
+
+                  <div className="space-y-4 max-w-xl mx-auto lg:mx-0">
+                    <p className="text-zinc-400 font-bold text-sm leading-relaxed uppercase">
+                      Estratega digital especializado en la construcción de infraestructuras visuales de alto impacto. Responsable de la visión tecnológica de "El Bugle Digital" y del despliegue de sistemas SaaS escalables.
+                    </p>
+                    <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-4">
+                       {['Liderazgo', 'Visión 360', 'Código Balístico', 'Diseño Élite'].map(tag => (
+                         <span key={tag} className="bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-black uppercase text-zinc-500 tracking-widest hover:text-red-marvel hover:border-red-marvel/30 transition-colors cursor-default">{tag}</span>
+                       ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-8 flex flex-col md:flex-row items-center gap-6 justify-center lg:justify-start">
+                     <button 
+                        onClick={() => window.open('https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383/', '_blank')}
+                        className="bg-white text-black px-10 py-4 font-impact text-2xl uppercase italic skew-x-[-12deg] hover:bg-red-marvel hover:text-white transition-all transform hover:scale-105 flex items-center gap-3 shadow-[10px_10px_0px_rgba(255,255,255,0.1)] active:translate-y-1"
+                     >
+                        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                        MI PERFIL PROFESIONAL
+                     </button>
+                     
+                     <div className="text-left font-mono text-[9px] text-zinc-600 space-y-1 border-l border-zinc-800 pl-6">
+                        <p>ID_TAG: BUGLE-01-DGA</p>
+                        <p>STATUS: ACTIVE_DEVOLOPER</p>
+                        <p>LOCATION: LIMA, PE / GLOBAL</p>
+                        <p>LAST_SYNC: {new Date().toLocaleDateString()}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </div>
+        );
       case 'archivos':
         return (
           <div className="space-y-20">
