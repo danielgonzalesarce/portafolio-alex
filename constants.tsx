@@ -23,5 +23,38 @@ export const PROJECTS: Project[] = [
     techStack: ['Web'],
     liveUrl: 'https://floreria-magaly-g3kq.vercel.app/',
     githubUrl: ''
+  },
+  {
+    id: '3',
+    name: "Lumina Hotel & Spa",
+    shortDescription: 'Plataforma de reservas y servicios para hotel de lujo.',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb',
+    demoType: 'IFRAME',
+    techStack: ['React', 'Firebase'],
+    liveUrl: 'https://lumina-hotel-spa.vercel.app/',
+    githubUrl: ''
+  },
+  {
+    id: '4',
+    name: "Portafolio JB Empresa",
+    shortDescription: 'Solución corporativa para gestión de portafolios.',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+    demoType: 'IFRAME',
+    techStack: ['React', 'Next.js'],
+    liveUrl: 'https://portafoliojb-empresa-g1qz.vercel.app/',
+    githubUrl: ''
+  },
+  {
+    id: '5',
+    name: "Luxe Tech E-commerce",
+    shortDescription: 'Tienda en línea premium para tecnología de vanguardia.',
+    category: 'E-commerce',
+    thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
+    demoType: 'IFRAME',
+    techStack: ['React', 'Node.js'],
+    liveUrl: 'https://luxe-tech-e-commerce-premium-lima.vercel.app/',
+    githubUrl: ''
   }
 ];

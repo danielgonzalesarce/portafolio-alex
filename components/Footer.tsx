@@ -53,6 +53,7 @@ const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
               <ul className="space-y-4 font-impact text-xl md:text-2xl uppercase text-zinc-400 tracking-tighter">
                 <li>Ciudad de México, MX</li>
                 <li>Línea Segura: 01-BUGLE-PRO</li>
+                <li><a href="https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a></li>
                 <li><button onClick={() => onViewChange('seguridad')} className="hover:text-white">Protocolos de Seguridad</button></li>
                 <li><button onClick={() => onViewChange('terminos')} className="hover:text-white">Términos del Servicio</button></li>
               </ul>
