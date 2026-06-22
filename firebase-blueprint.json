@@ -1,0 +1,117 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores basic user information and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique Firebase Auth ID." },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User role for access control." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ProjectAcquisition": {
+      "title": "Project Acquisition",
+      "description": "Records when a user acquires a project.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The ID of the user who acquired the project." },
+        "projectId": { "type": "string", "description": "The ID of the project acquired." },
+        "projectName": { "type": "string" },
+        "acquiredAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "pending", "cancelled"] }
+      },
+      "required": ["userId", "projectId", "acquiredAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "User reviews for the portfolio or specific projects.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhoto": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "approved": { "type": "boolean", "description": "Whether the review is visible on the site." }
+      },
+      "required": ["userId", "userName", "rating", "comment", "createdAt"]
+    },
+    "MissionBriefing": {
+      "title": "Mission Briefing",
+      "description": "Data from the contact form.",
+      "type": "object",
+      "properties": {
+        "agentName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "objective": { "type": "string" },
+        "details": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["new", "read", "replied"] }
+      },
+      "required": ["agentName", "email", "objective", "details", "createdAt"]
+    },
+    "SupportMessage": {
+      "title": "Support Message",
+      "description": "Technical support requests.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["new", "read", "resolved"] }
+      },
+      "required": ["name", "email", "subject", "message", "createdAt"]
+    },
+    "PortfolioProject": {
+      "title": "Portfolio Project",
+      "description": "Projects displayed in the portfolio grid.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "category": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "demoType": { "type": "string" },
+        "techStack": { "type": "array", "items": { "type": "string" } },
+        "liveUrl": { "type": "string" },
+        "githubUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "category", "thumbnail"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles collection."
+    },
+    "/acquisitions/{acquisitionId}": {
+      "schema": "ProjectAcquisition",
+      "description": "Collection of project acquisitions."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Collection of user reviews."
+    },
+    "/briefings/{briefingId}": {
+      "schema": "MissionBriefing",
+      "description": "Collection of mission briefings."
+    },
+    "/support_messages/{messageId}": {
+      "schema": "SupportMessage",
+      "description": "Collection of support messages."
+    },
+    "/projects/{projectId}": {
+      "schema": "PortfolioProject",
+      "description": "Collection of portfolio projects."
+    }
+  }
+}

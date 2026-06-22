@@ -99,7 +99,7 @@ const Hero: React.FC = () => {
 
           {/* Centro: Tech Stack + Botón */}
           <div className="flex flex-col items-center gap-6 w-full md:w-auto">
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-wrap justify-center gap-2 items-center max-w-[280px] md:max-w-none">
               {techStack.map((tech, i) => (
                 <motion.div 
                   key={tech.name}
@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
             >
               <div className="absolute inset-0 bg-red-marvel blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
               <div className="relative bg-red-marvel text-white px-10 md:px-16 py-4 md:py-5 font-impact text-3xl md:text-4xl uppercase tracking-tighter italic skew-x-[-12deg] transition-transform hover:scale-105 active:scale-95 shadow-[10px_10px_0px_rgba(255,255,255,0.1)]">
-                EXPLORAR PROYECTOS >
+                EXPLORAR PROYECTOS &gt;
               </div>
             </button>
           </div>

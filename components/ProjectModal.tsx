@@ -1,7 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '../types';
+import { auth, db, handleFirestoreError, OperationType } from '../firebase';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
 interface ProjectModalProps {
   project: Project;
@@ -11,6 +13,55 @@ interface ProjectModalProps {
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isAcquiring, setIsAcquiring] = useState(false);
+  const [isAcquired, setIsAcquired] = useState(false);
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const checkAcquisition = async () => {
+      if (!user) return;
+      const path = 'acquisitions';
+      try {
+        const q = query(
+          collection(db, path), 
+          where('userId', '==', user.uid),
+          where('projectId', '==', project.id)
+        );
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          setIsAcquired(true);
+        }
+      } catch (error) {
+        handleFirestoreError(error, OperationType.GET, path);
+      }
+    };
+    checkAcquisition();
+  }, [user, project.id]);
+
+  const handleAcquire = async () => {
+    if (!user) {
+      alert('Debes iniciar sesión para adquirir proyectos.');
+      return;
+    }
+
+    setIsAcquiring(true);
+    const path = 'acquisitions';
+    try {
+      await addDoc(collection(db, path), {
+        userId: user.uid,
+        projectId: project.id,
+        projectName: project.name,
+        acquiredAt: serverTimestamp(),
+        status: 'active'
+      });
+      setIsAcquired(true);
+      alert('¡Proyecto adquirido con éxito! Revisa tu cuenta.');
+    } catch (error) {
+      handleFirestoreError(error, OperationType.WRITE, path);
+    } finally {
+      setIsAcquiring(false);
+    }
+  };
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -60,7 +111,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             </svg>
             <span className="text-[11px] text-zinc-500 font-mono truncate select-all">{project.liveUrl}</span>
             <div className="flex-1"></div>
-            <button onClick={handleRefresh} className="p-1 hover:text-white text-zinc-600 transition-colors">
+            <button onClick={() => window.open(project.liveUrl, '_blank')} className="p-1 hover:text-white text-zinc-600 transition-colors mr-2" title="Abrir en nueva pestaña">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </button>
+            <button onClick={handleRefresh} className="p-1 hover:text-white text-zinc-600 transition-colors" title="Recargar">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
@@ -68,6 +124,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           </div>
 
           <div className="flex items-center gap-3">
+             {isAcquired ? (
+               <div className="bg-green-500/10 border border-green-500/50 text-green-500 px-4 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider flex items-center gap-2">
+                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                 Adquirido
+               </div>
+             ) : (
+               <button 
+                 disabled={isAcquiring}
+                 className="bg-white text-black px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider hover:bg-red-marvel hover:text-white transition-all disabled:opacity-50"
+                 onClick={handleAcquire}
+               >
+                 {isAcquiring ? 'Procesando...' : 'Adquirir Licencia'}
+               </button>
+             )}
+             
              <button 
                className="bg-red-marvel text-white px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider shadow-lg shadow-red-marvel/20 hover:scale-105 active:scale-95 transition-all"
                onClick={() => window.open(`https://wa.me/51936068781?text=Hola, estoy interesado en el sistema ${project.name}`, '_blank')}
