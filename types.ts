@@ -1,5 +1,5 @@
 
-export type ProjectCategory = 'AI' | '3D' | 'Data' | 'UI/UX' | 'SaaS' | 'ERP' | 'CRM';
+export type ProjectCategory = 'AI' | '3D' | 'Data' | 'UI/UX' | 'SaaS' | 'ERP' | 'CRM' | 'Web' | 'E-commerce';
 
 export interface Project {
   id: string;

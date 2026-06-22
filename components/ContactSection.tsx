@@ -10,6 +10,8 @@ const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     agentName: '',
     email: '',
+    phone: '',
+    company: '',
     objective: 'Desarrollo Web Fullstack',
     details: ''
   });
@@ -25,6 +27,8 @@ const ContactSection: React.FC = () => {
       const payload = isSupport ? {
         name: formData.agentName,
         email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
         subject: 'Soporte Técnico',
         message: formData.details,
         createdAt: serverTimestamp(),
@@ -36,8 +40,14 @@ const ContactSection: React.FC = () => {
       };
 
       await addDoc(collection(db, collectionName), payload);
+
+      // WhatsApp Integration
+      const whatsappMessage = `Hola, soy ${formData.agentName} de ${formData.company || 'la empresa'}. Tengo un proyecto: ${formData.objective}. Detalles: ${formData.details}`;
+      const whatsappUrl = `https://wa.me/5215512345678?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
+
       setStatus('sent');
-      setFormData({ agentName: '', email: '', objective: 'Desarrollo Web Fullstack', details: '' });
+      setFormData({ agentName: '', email: '', phone: '', company: '', objective: 'Desarrollo Web Fullstack', details: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error("Error submitting message:", error);
@@ -136,6 +146,29 @@ const ContactSection: React.FC = () => {
                     required
                     className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
                     placeholder="agente@bugle.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Teléfono (WhatsApp)</label>
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
+                    placeholder="+52 1 55 0000 0000"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Empresa</label>
+                  <input 
+                    type="text" 
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
+                    placeholder="Nombre de la empresa"
                   />
                 </div>
               </div>

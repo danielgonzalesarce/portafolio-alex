@@ -14,7 +14,7 @@ interface ProjectGridProps {
 const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery }) => {
   const [filter, setFilter] = useState<ProjectCategory | 'Todo'>('Todo');
   const [firestoreProjects, setFirestoreProjects] = useState<Project[]>([]);
-  const categories: (ProjectCategory | 'Todo')[] = ['Todo', 'SaaS', 'CRM', 'ERP', 'Data', 'AI'];
+  const categories: (ProjectCategory | 'Todo')[] = ['Todo', 'Web', 'E-commerce'];
 
   useEffect(() => {
     const qProjects = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
