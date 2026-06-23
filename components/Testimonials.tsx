@@ -43,8 +43,8 @@ const MOCK_REVIEWS: Review[] = [
 ];
 
 const Testimonials: React.FC = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [reviews, setReviews] = useState<Review[]>(MOCK_REVIEWS);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [newComment, setNewComment] = useState('');
   const [newRating, setNewRating] = useState(5);
@@ -60,16 +60,13 @@ const Testimonials: React.FC = () => {
         ...doc.data()
       })) as Review[];
       
-      // If there are no reviews in DB, show mock reviews
-      if (loadedReviews.length === 0) {
-        setReviews(MOCK_REVIEWS);
-      } else {
+      // If there are real reviews, show them
+      if (loadedReviews.length > 0) {
         setReviews(loadedReviews);
       }
       setIsLoading(false);
     }, (error) => {
       handleFirestoreError(error, OperationType.LIST, 'reviews');
-      setReviews(MOCK_REVIEWS);
       setIsLoading(false);
     });
 

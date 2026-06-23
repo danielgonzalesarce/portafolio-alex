@@ -43,7 +43,7 @@ const ContactSection: React.FC = () => {
 
       // WhatsApp Integration
       const whatsappMessage = `Hola, soy ${formData.agentName} de ${formData.company || 'la empresa'}. Tengo un proyecto: ${formData.objective}. Detalles: ${formData.details}`;
-      const whatsappUrl = `https://wa.me/5215512345678?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl = `https://wa.me/51936068781?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
 
       setStatus('sent');

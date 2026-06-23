@@ -51,8 +51,8 @@ const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
             <address className="not-italic">
               <h3 className="text-red-marvel font-black text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 underline decoration-2 underline-offset-8">Terminal Central</h3>
               <ul className="space-y-4 font-impact text-xl md:text-2xl uppercase text-zinc-400 tracking-tighter">
-                <li>Ciudad de México, MX</li>
-                <li>Línea Segura: 01-BUGLE-PRO</li>
+                <li>LIMA, PERÚ</li>
+                <li>Línea Segura: <a href="https://wa.me/51936068781?text=Hola,%20vengo%20de%20su%20portafolio" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-marvel transition-colors">936068781</a> Perú</li>
                 <li><a href="https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a></li>
                 <li><button onClick={() => onViewChange('seguridad')} className="hover:text-white">Protocolos de Seguridad</button></li>
                 <li><button onClick={() => onViewChange('terminos')} className="hover:text-white">Términos del Servicio</button></li>
