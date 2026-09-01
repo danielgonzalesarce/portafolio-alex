@@ -56,5 +56,27 @@ export const PROJECTS: Project[] = [
     techStack: ['React', 'Node.js'],
     liveUrl: 'https://luxe-tech-e-commerce-premium-lima.vercel.app/',
     githubUrl: ''
+  },
+  {
+    id: '6',
+    name: "Aceros Marin",
+    shortDescription: 'Soluciones especializadas en acero y productos metalmecánicos.',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23',
+    demoType: 'IFRAME',
+    techStack: ['React'],
+    liveUrl: 'https://aceros-marin.vercel.app/',
+    githubUrl: ''
+  },
+  {
+    id: '7',
+    name: "Go Gym",
+    shortDescription: 'Plataforma integral para gestión y seguimiento de entrenamiento.',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
+    demoType: 'IFRAME',
+    techStack: ['React'],
+    liveUrl: 'https://go-gym-nine.vercel.app/',
+    githubUrl: ''
   }
 ];
