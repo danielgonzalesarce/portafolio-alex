@@ -78,5 +78,16 @@ export const PROJECTS: Project[] = [
     techStack: ['React'],
     liveUrl: 'https://go-gym-nine.vercel.app/',
     githubUrl: ''
+  },
+  {
+    id: '8',
+    name: "M&J Elevadores",
+    shortDescription: 'Soluciones profesionales en instalación y mantenimiento de elevadores.',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1596489381506-5ecd813e3328',
+    demoType: 'IFRAME',
+    techStack: ['React'],
+    liveUrl: 'https://mjelevadores.vercel.app/',
+    githubUrl: ''
   }
 ];
