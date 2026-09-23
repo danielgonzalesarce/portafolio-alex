@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
     name: "M&J Elevadores",
     shortDescription: 'Soluciones profesionales en instalación y mantenimiento de elevadores.',
     category: 'Web',
-    thumbnail: 'https://blog.laminasyaceros.com/blog/elevadores-y-su-fabricaci%C3%B3n',
+    thumbnail: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963',
     demoType: 'IFRAME',
     techStack: ['React'],
     liveUrl: 'https://mjelevadores.vercel.app/',
