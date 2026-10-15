@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
-          className="absolute w-[50vw] h-[50vw] bg-red-marvel/10 rounded-full blur-[140px]"
+          className="absolute w-[42vw] h-[42vw] bg-red-marvel/30 rounded-full blur-[120px]"
         />
         <div className="w-[80%] aspect-square border border-white/5 rounded-full absolute opacity-20"></div>
         <div className="w-[60%] aspect-square border border-white/10 rounded-full absolute opacity-10"></div>
@@ -66,10 +66,10 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h2 className="text-white font-impact text-[18vw] md:text-[14rem] lg:text-[18rem] leading-[0.75] tracking-tighter uppercase">
+            <h2 className="text-white font-impact text-[13vw] md:text-[14rem] lg:text-[18rem] leading-[0.75] tracking-tighter uppercase">
               PORTAFOLIO
             </h2>
-            <h3 className="marvel-text-outline font-impact text-[8vw] md:text-[6rem] lg:text-[8rem] leading-none tracking-tighter uppercase -mt-4">
+            <h3 className="marvel-text-outline font-impact text-[6.5vw] md:text-[6rem] lg:text-[8rem] leading-none tracking-tighter uppercase -mt-4">
               WEB FULLSTACK
             </h3>
           </motion.div>
@@ -93,8 +93,8 @@ const Hero: React.FC = () => {
           
           {/* Info Izquierda */}
           <div className="hidden md:block text-left pb-4">
-            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Unidad de Desarrollo</p>
-            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">CORE ENGINE V3.0</h4>
+            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Disponible para proyectos</p>
+            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">Lima, Perú</h4>
           </div>
 
           {/* Centro: Tech Stack + Botón */}
@@ -113,21 +113,34 @@ const Hero: React.FC = () => {
               ))}
             </div>
             
-            <button 
-              onClick={handleScroll}
-              className="group relative"
-            >
-              <div className="absolute inset-0 bg-red-marvel blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <div className="relative bg-red-marvel text-white px-10 md:px-16 py-4 md:py-5 font-impact text-3xl md:text-4xl uppercase tracking-tighter italic skew-x-[-12deg] transition-transform hover:scale-105 active:scale-95 shadow-[10px_10px_0px_rgba(255,255,255,0.1)]">
-                EXPLORAR PROYECTOS &gt;
-              </div>
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <button 
+                onClick={handleScroll}
+                className="group relative"
+              >
+                <div className="absolute inset-0 bg-red-marvel blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative bg-red-marvel text-white px-5 py-3 font-impact text-xl uppercase tracking-tighter italic skew-x-[-12deg] transition-transform hover:scale-105 active:scale-95 shadow-[10px_10px_0px_rgba(255,255,255,0.1)] sm:px-10 sm:py-4 sm:text-3xl md:px-16 md:py-5 md:text-4xl">
+                  EXPLORAR PROYECTOS &gt;
+                </div>
+              </button>
+              <a
+                href="https://wa.me/51936068781?text=Hola%20Daniel%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                <div className="absolute inset-0 bg-white blur-2xl opacity-10 group-hover:opacity-25 transition-opacity"></div>
+                <div className="relative bg-white text-black px-5 py-3 font-impact text-xl uppercase tracking-tighter italic skew-x-[-12deg] transition-transform hover:scale-105 active:scale-95 shadow-[10px_10px_0px_rgba(255,255,255,0.1)] sm:px-10 sm:py-4 sm:text-3xl md:px-16 md:py-5 md:text-4xl">
+                  CONTÁCTAME &gt;
+                </div>
+              </a>
+            </div>
           </div>
 
           {/* Info Derecha */}
-          <div className="hidden md:block text-right pb-4">
-            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Estado del Sistema</p>
-            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">TOTALMENTE OPERATIVO</h4>
+          <div className="hidden md:block text-right pb-4 pr-24">
+            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Respuesta rápida</p>
+            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">En menos de 24 h</h4>
           </div>
 
         </div>

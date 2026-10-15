@@ -1,13 +1,15 @@
-
-import { Project } from './types';
+import { Client, Project } from './types';
 
 export const PROJECTS: Project[] = [
   {
     id: '1',
     name: "Maison d'Or Repostería",
     shortDescription: 'Sistema de gestión y catálogo exclusivo para alta repostería artesanal.',
-    category: 'SaaS',
-    thumbnail: 'https://st.depositphotos.com/1585997/4589/i/450/depositphotos_45899497-stock-photo-pastry-shop.jpg',
+    problem: 'La pastelería no tenía un catálogo público para mostrar sus productos.',
+    work: 'Publiqué un sitio con la carta de la repostería artesanal.',
+    category: 'Web',
+    slug: 'maison-dor',
+    thumbnail: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['HTML', 'CSS', 'JS'],
     liveUrl: 'https://danielgonzalesarce.github.io/reposteria-/',
@@ -17,8 +19,11 @@ export const PROJECTS: Project[] = [
     id: '2',
     name: "Florería Magaly",
     shortDescription: 'Catálogo en línea y sistema de pedidos para florería.',
-    category: 'SaaS',
-    thumbnail: 'https://st5.depositphotos.com/5903596/69799/i/450/depositphotos_697995684-stock-photo-outdoor-flower-shop-paris-france.jpg',
+    problem: 'Los encargos dependían del teléfono, sin un catálogo para elegir.',
+    work: 'Armé un catálogo en línea para ver arreglos y encargar.',
+    category: 'Web',
+    slug: 'floreria-magaly',
+    thumbnail: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['Web'],
     liveUrl: 'https://floreria-magaly-g3kq.vercel.app/',
@@ -28,8 +33,11 @@ export const PROJECTS: Project[] = [
     id: '3',
     name: "Lumina Hotel & Spa",
     shortDescription: 'Plataforma de reservas y servicios para hotel de lujo.',
-    category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb',
+    problem: 'El hotel necesitaba presentar habitaciones y reservas en un solo sitio.',
+    work: 'Construí la plataforma de reservas y servicios con React y Firebase.',
+    category: 'Proyecto propio',
+    slug: 'lumina-hotel',
+    thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['React', 'Firebase'],
     liveUrl: 'https://lumina-hotel-spa.vercel.app/',
@@ -39,8 +47,11 @@ export const PROJECTS: Project[] = [
     id: '4',
     name: "Portafolio JB Empresa",
     shortDescription: 'Solución corporativa para gestión de portafolios.',
+    problem: 'La empresa no tenía una portada clara de lo que ofrece.',
+    work: 'Desarrollé el sitio corporativo para ordenar servicios y contacto.',
     category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+    slug: 'portafolio-jb',
+    thumbnail: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['React', 'Next.js'],
     liveUrl: 'https://portafoliojb-empresa-g1qz.vercel.app/',
@@ -50,8 +61,11 @@ export const PROJECTS: Project[] = [
     id: '5',
     name: "Luxe Tech E-commerce",
     shortDescription: 'Tienda en línea premium para tecnología de vanguardia.',
+    problem: 'La tienda de tecnología no tenía un canal de venta en línea.',
+    work: 'Monté el comercio con catálogo y flujo de compra.',
     category: 'E-commerce',
-    thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
+    slug: 'luxe-tech',
+    thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['React', 'Node.js'],
     liveUrl: 'https://luxe-tech-e-commerce-premium-lima.vercel.app/',
@@ -59,10 +73,13 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '6',
-    name: "Aceros Marin",
+    name: "Aceros Marín",
     shortDescription: 'Soluciones especializadas en acero y productos metalmecánicos.',
+    problem: 'El negocio de acero no mostraba su línea de productos en la web.',
+    work: 'Diseñé y publiqué el sitio de la línea metalmecánica.',
     category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23',
+    slug: 'aceros-marin',
+    thumbnail: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['React'],
     liveUrl: 'https://aceros-marin.vercel.app/',
@@ -72,23 +89,36 @@ export const PROJECTS: Project[] = [
     id: '7',
     name: "Go Gym",
     shortDescription: 'Plataforma integral para gestión y seguimiento de entrenamiento.',
+    problem: 'El gimnasio no tenía una página para mostrar planes y entrenamiento.',
+    work: 'Desarrollé el sitio para presentar esa información.',
     category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
+    slug: 'go-gym',
+    thumbnail: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=80',
     demoType: 'IFRAME',
     techStack: ['React'],
     liveUrl: 'https://go-gym-nine.vercel.app/',
     githubUrl: ''
-  },
-  {
-    id: '8',
-    name: "M&J Elevadores",
-    shortDescription: 'Soluciones profesionales en instalación y mantenimiento de elevadores.',
-    category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963',
-    demoType: 'IFRAME',
-    techStack: ['React'],
-    liveUrl: 'https://mjelevadores.vercel.app/',
-    githubUrl: '',
-    openInNewTab: true
   }
+];
+
+export const CLIENTS: Client[] = [
+  { name: 'Aceros Marín', logo: '/logos/aceros-marin.png' },
+  { name: 'Studio Paucolor', logo: '/logos/studio-paucolor.png' },
+  { name: 'Go Gym', logo: '/logos/go-gym.png' },
+];
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  business: string;
+};
+
+export const showTestimonials = false;
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: '[Pendiente: testimonio real]',
+    name: '[Pendiente: nombre]',
+    business: 'Aceros Marín',
+  },
 ];

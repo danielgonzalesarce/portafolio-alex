@@ -1,60 +1,35 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Send, FileText, AlertCircle, CheckCircle } from 'lucide-react';
-import { db, OperationType, handleFirestoreError } from '../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Send, CheckCircle } from 'lucide-react';
+
+const WA = 'https://wa.me/51936068781?text=Hola%20Daniel%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto';
 
 const ContactSection: React.FC = () => {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [formData, setFormData] = useState({
     agentName: '',
     email: '',
     phone: '',
     company: '',
-    objective: 'Desarrollo Web Fullstack',
+    objective: 'Página web',
     details: ''
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('sending');
-    
-    try {
-      const isSupport = formData.objective === 'Soporte Técnico';
-      const collectionName = isSupport ? 'support_messages' : 'briefings';
-      
-      const payload = isSupport ? {
-        name: formData.agentName,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        subject: 'Soporte Técnico',
-        message: formData.details,
-        createdAt: serverTimestamp(),
-        status: 'new'
-      } : {
-        ...formData,
-        createdAt: serverTimestamp(),
-        status: 'new'
-      };
 
-      await addDoc(collection(db, collectionName), payload);
+    const whatsappMessage = `Hola Daniel, soy ${formData.agentName}. Vi tu portafolio y me gustaría cotizar un proyecto. Correo: ${formData.email}. WhatsApp: ${formData.phone}. Negocio: ${formData.company || 'no indicado'}. Necesito: ${formData.objective}. Detalles: ${formData.details}`;
+    const whatsappUrl = `https://wa.me/51936068781?text=${encodeURIComponent(whatsappMessage)}`;
+    const opened = window.open(whatsappUrl, '_blank');
+    if (opened) opened.opener = null;
 
-      // WhatsApp Integration
-      const whatsappMessage = `Hola, soy ${formData.agentName} de ${formData.company || 'la empresa'}. Tengo un proyecto: ${formData.objective}. Detalles: ${formData.details}`;
-      const whatsappUrl = `https://wa.me/51936068781?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
-
-      setStatus('sent');
-      setFormData({ agentName: '', email: '', phone: '', company: '', objective: 'Desarrollo Web Fullstack', details: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    } catch (error) {
-      console.error("Error submitting message:", error);
+    if (!opened) {
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 3000);
-      handleFirestoreError(error, OperationType.CREATE, formData.objective === 'Soporte Técnico' ? 'support_messages' : 'briefings');
+      return;
     }
+
+    setStatus('sent');
+    setFormData({ agentName: '', email: '', phone: '', company: '', objective: 'Página web', details: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -64,7 +39,6 @@ const ContactSection: React.FC = () => {
 
   return (
     <section id="contacto" className="py-32 bg-black relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-marvel to-transparent opacity-50" />
       
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -76,37 +50,28 @@ const ContactSection: React.FC = () => {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-marvel/10 border border-red-marvel/20 text-red-marvel text-[10px] font-black uppercase tracking-[0.3em]">
-              <Shield size={12} />
-              Canal de Comunicación Seguro
-            </div>
+            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Contáctame</p>
             
             <h2 className="text-6xl md:text-7xl font-impact italic tracking-tighter text-white uppercase leading-none">
-              ENVÍA TU <span className="text-red-marvel">BRIEFING</span> DE MISIÓN
+              CUÉNTAME TU <span className="text-red-marvel">PROYECTO</span>
             </h2>
             
             <p className="text-zinc-500 text-lg max-w-md">
-              ¿Tienes un proyecto que necesita el toque Bugle? Envía los detalles y nuestro equipo de inteligencia se pondrá en contacto.
+              Cuéntame tu proyecto. Te respondo yo, por WhatsApp, en menos de 24 horas.
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-red-marvel">
-                  <FileText size={24} />
-                </div>
-                <div>
-                  <h4 className="text-white font-bold uppercase tracking-wider text-sm">Protocolo de Inicio</h4>
-                  <p className="text-zinc-500 text-xs">Respuesta garantizada en menos de 24 horas.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-red-marvel">
-                  <AlertCircle size={24} />
-                </div>
-                <div>
-                  <h4 className="text-white font-bold uppercase tracking-wider text-sm">Urgencia Máxima</h4>
-                  <p className="text-zinc-500 text-xs">Para lanzamientos inmediatos, usa la línea roja.</p>
-                </div>
+              <h4 className="text-white font-bold uppercase tracking-wider text-sm">Respuesta en menos de 24 horas</h4>
+              <div>
+                <h4 className="text-white font-bold uppercase tracking-wider text-sm">¿Es urgente? Escríbeme directo por WhatsApp</h4>
+                <a
+                  href={WA}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block bg-red-marvel px-5 py-3 font-impact text-sm uppercase italic tracking-tighter text-white skew-x-[-8deg]"
+                >
+                  Escríbeme por WhatsApp
+                </a>
               </div>
             </div>
           </motion.div>
@@ -125,7 +90,7 @@ const ContactSection: React.FC = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Nombre del Agente</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Tu nombre</label>
                   <input 
                     type="text" 
                     name="agentName"
@@ -133,11 +98,11 @@ const ContactSection: React.FC = () => {
                     onChange={handleChange}
                     required
                     className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Ej. María Pérez"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Frecuencia (Email)</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Correo</label>
                   <input 
                     type="email" 
                     name="email"
@@ -145,11 +110,11 @@ const ContactSection: React.FC = () => {
                     onChange={handleChange}
                     required
                     className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
-                    placeholder="agente@bugle.com"
+                    placeholder="tu@correo.com"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Teléfono (WhatsApp)</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">WhatsApp</label>
                   <input 
                     type="tel" 
                     name="phone"
@@ -157,61 +122,56 @@ const ContactSection: React.FC = () => {
                     onChange={handleChange}
                     required
                     className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
-                    placeholder="+52 1 55 0000 0000"
+                    placeholder="936 068 781"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Empresa</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Negocio o empresa</label>
                   <input 
                     type="text" 
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
                     className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors"
-                    placeholder="Nombre de la empresa"
+                    placeholder="Nombre del negocio"
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Objetivo de la Misión</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">¿Qué necesitas?</label>
                 <select 
                   name="objective"
                   value={formData.objective}
                   onChange={handleChange}
                   className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-red-marvel transition-colors appearance-none"
                 >
-                  <option>Desarrollo Web Fullstack</option>
-                  <option>Diseño de Interfaz UI/UX</option>
-                  <option>Consultoría de Inteligencia</option>
-                  <option>Producción Audiovisual</option>
-                  <option>Soporte Técnico</option>
+                  <option>Página web</option>
+                  <option>Tienda en línea</option>
+                  <option>Aplicación</option>
+                  <option>Automatización</option>
                   <option>Otro</option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Detalles Clasificados</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Detalles</label>
                 <textarea 
                   name="details"
                   value={formData.details}
                   onChange={handleChange}
                   required
                   className="w-full bg-black/50 border border-zinc-800 text-white px-4 py-4 rounded-xl focus:outline-none focus:border-red-marvel transition-colors h-32 resize-none"
-                  placeholder="Describe los objetivos de tu proyecto..."
+                  placeholder="Cuéntame qué necesitas"
                 />
               </div>
 
               <button
                 type="submit"
-                disabled={status !== 'idle'}
-                className="w-full group relative overflow-hidden bg-red-marvel text-white font-impact text-2xl uppercase italic tracking-widest py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                className="w-full group relative overflow-hidden bg-red-marvel text-white font-impact text-2xl uppercase italic tracking-widest py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-3">
-                  {status === 'idle' && <><Send size={20} /> Transmitir Briefing</>}
-                  {status === 'sending' && "Cifrando Mensaje..."}
-                  {status === 'sent' && <><CheckCircle size={20} /> Misión Recibida</>}
-                  {status === 'error' && "Error en Transmisión"}
+                  <Send size={20} /> Enviar mensaje
                 </span>
                 <motion.div 
                   className="absolute inset-0 bg-white/20"
@@ -220,6 +180,18 @@ const ContactSection: React.FC = () => {
                   transition={{ duration: 0.5 }}
                 />
               </button>
+
+              {status === 'sent' && (
+                <p className="flex items-start gap-2 text-sm text-white" role="status">
+                  <CheckCircle size={18} className="mt-0.5 shrink-0 text-red-marvel" />
+                  Listo. Se abrió WhatsApp con tu mensaje. Envíalo desde ahí para que me llegue.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="text-sm text-white" role="status">
+                  No pude abrir WhatsApp. Escríbeme directo al 936 068 781.
+                </p>
+              )}
             </form>
           </motion.div>
 

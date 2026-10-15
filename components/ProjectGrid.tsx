@@ -1,176 +1,169 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PROJECTS as STATIC_PROJECTS } from '../constants';
+import { PROJECTS } from '../constants';
 import { Project, ProjectCategory } from '../types';
-import { db, handleFirestoreError, OperationType } from '../firebase';
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
 interface ProjectGridProps {
   onProjectSelect: (project: Project) => void;
   searchQuery: string;
 }
 
+const categories: { label: string; value: ProjectCategory | 'Todo' }[] = [
+  { label: 'Todo', value: 'Todo' },
+  { label: 'Web', value: 'Web' },
+  { label: 'E-commerce', value: 'E-commerce' },
+  { label: 'Proyectos propios', value: 'Proyecto propio' },
+];
+
+const ProjectThumb: React.FC<{ project: Project }> = ({ project }) => {
+  const localShot = project.slug ? `/projects/${project.slug}.png` : project.thumbnail;
+  const [src, setSrc] = useState(localShot);
+
+  return (
+    <img
+      src={src}
+      alt=""
+      className="h-full w-full object-cover transition-transform duration-700 md:group-hover:scale-[1.04]"
+      onError={() => {
+        if (src !== project.thumbnail) setSrc(project.thumbnail);
+      }}
+    />
+  );
+};
+
 const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery }) => {
   const [filter, setFilter] = useState<ProjectCategory | 'Todo'>('Todo');
-  const [firestoreProjects, setFirestoreProjects] = useState<Project[]>([]);
-  const categories: (ProjectCategory | 'Todo')[] = ['Todo', 'Web', 'E-commerce'];
-
-  useEffect(() => {
-    const qProjects = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-    const unsubProjects = onSnapshot(qProjects, (snapshot) => {
-      setFirestoreProjects(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Project[]);
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'projects');
-    });
-
-    return () => unsubProjects();
-  }, []);
-
-  const allProjects = useMemo(() => {
-    const projectMap = new Map<string, Project>();
-    STATIC_PROJECTS.forEach(p => projectMap.set(p.id, p));
-    firestoreProjects.forEach(p => projectMap.set(p.id, p));
-    return Array.from(projectMap.values());
-  }, [firestoreProjects]);
 
   const filteredProjects = useMemo(() => {
-    return allProjects.filter(p => {
+    return PROJECTS.filter(p => {
       const matchesCategory = filter === 'Todo' || p.category === filter;
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [allProjects, filter, searchQuery]);
+  }, [filter, searchQuery]);
 
   return (
-    <section id="portfolio" className="relative z-10 bg-[#080808] pt-32 pb-48">
-      <div className="max-w-[1400px] mx-auto px-8">
+    <section id="portfolio" className="relative z-10 bg-[#050505] pt-12 pb-24 md:pt-16 md:pb-48">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8">
         
-        <header className="mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-marvel" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <h2 className="text-white font-impact text-xl uppercase tracking-widest italic">Galería Workspace</h2>
-          </div>
-          <p className="text-zinc-400 font-medium text-lg max-w-2xl mb-10">
-            Interfaces funcionales listas para producción. Haz clic en <span className="text-white">Lanzar Demo</span> para interactuar con el entorno real de cada proyecto.
+        <header className="mb-10 md:mb-16">
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Galería</p>
+          <h2 className="font-impact text-5xl uppercase italic leading-none tracking-tighter text-white sm:text-6xl md:text-8xl">
+            Proyectos
+          </h2>
+          <p className="mb-8 mt-5 max-w-xl text-sm text-white/50 md:mb-10 md:mt-6 md:text-base">
+            Sitios publicados. Toca la foto para abrir la <span className="text-white">vista previa</span>.
           </p>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-6 py-2 rounded-lg text-[11px] font-bold tracking-widest transition-all uppercase ${
-                  filter === cat 
-                  ? 'bg-white text-black' 
-                  : 'bg-[#121212] text-zinc-500 border border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300'
+                key={cat.value}
+                onClick={() => setFilter(cat.value)}
+                className={`skew-x-[-8deg] px-4 py-2 font-impact text-base uppercase italic tracking-tighter transition-colors md:px-6 md:text-lg ${
+                  filter === cat.value
+                  ? 'bg-red-marvel text-white'
+                  : 'text-white/40 hover:text-white'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          <AnimatePresence mode='popLayout'>
-            {filteredProjects.map((project) => (
-              <motion.div
-                layout
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="group flex flex-col"
-              >
-                {/* Emergent Style Browser Frame */}
-                <div 
-                  className="relative aspect-[16/11] bg-[#141414] rounded-[12px] overflow-hidden border border-zinc-800 group-hover:border-zinc-700 transition-all duration-300 shadow-xl group-hover:shadow-2xl cursor-pointer"
-                  onClick={() => {
-                    if (project.openInNewTab && project.liveUrl) {
-                      window.open(project.liveUrl, '_blank');
-                    } else {
-                      onProjectSelect(project);
-                    }
-                  }}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => {
+              const openProject = () => {
+                if (project.openInNewTab && project.liveUrl) {
+                  window.open(project.liveUrl, '_blank');
+                } else {
+                  onProjectSelect(project);
+                }
+              };
+
+              const beats: [string, string, string][] = [
+                ['01', 'Problema', project.problem],
+                ['02', 'Trabajo', project.work],
+                ...(project.outcome ? [['03', 'Resultado', project.outcome] as [string, string, string]] : []),
+              ];
+
+              return (
+                <motion.article
+                  layout
+                  key={project.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="group flex h-full flex-col overflow-hidden border border-white/10 bg-black transition-colors duration-300 hover:border-red-marvel/70"
                 >
-                  {/* Fake Browser Toolbar */}
-                  <div className="h-7 bg-[#1a1a1a] border-b border-zinc-800 flex items-center px-3 gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-zinc-700"></div>
-                    <div className="w-2 h-2 rounded-full bg-zinc-700"></div>
-                    <div className="w-2 h-2 rounded-full bg-zinc-700"></div>
+                  <div className="flex h-9 shrink-0 items-center justify-between border-b border-white/10 px-4">
+                    <div className="flex items-center gap-1.5" aria-hidden="true">
+                      <span className="h-2 w-2 rounded-full bg-red-marvel"></span>
+                      <span className="h-2 w-2 rounded-full bg-white/20"></span>
+                      <span className="h-2 w-2 rounded-full bg-white/20"></span>
+                    </div>
+                    <span className="font-impact text-[10px] uppercase tracking-[0.35em] text-white/40">{project.category}</span>
                   </div>
 
-                  <img 
-                    src={project.thumbnail || null} 
-                    alt={project.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  />
-                  
-                  {/* Interaction HUD */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                    <button 
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (project.openInNewTab && project.liveUrl) {
-                          window.open(project.liveUrl, '_blank');
-                        } else {
-                          onProjectSelect(project); 
-                        }
-                      }}
-                      className="bg-zinc-100 text-black px-4 py-2 rounded-md font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
+                  <button
+                    type="button"
+                    onClick={openProject}
+                    aria-label={`Vista previa de ${project.name}`}
+                    className="relative aspect-[16/10] shrink-0 overflow-hidden"
+                  >
+                    <ProjectThumb project={project} />
+                    <span className="absolute bottom-3 left-3 skew-x-[-8deg] bg-white px-3 py-1.5 font-impact text-[11px] uppercase italic tracking-tighter text-black shadow-[3px_3px_0_rgba(0,0,0,0.55)] md:hidden">
                       Vista previa
-                    </button>
-                    <button 
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (project.openInNewTab && project.liveUrl) {
-                          window.open(project.liveUrl, '_blank');
-                        } else {
-                          onProjectSelect(project); 
-                        }
-                      }}
-                      className="bg-red-marvel text-white px-4 py-2 rounded-md font-bold text-[11px] uppercase tracking-wider hover:bg-red-600 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                      </svg>
-                      Lanzar Demo
-                    </button>
-                  </div>
-                </div>
+                    </span>
+                    <span className="absolute inset-0 hidden items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100">
+                      <span className="skew-x-[-8deg] bg-white px-5 py-2.5 font-impact text-lg uppercase italic tracking-tighter text-black">
+                        Vista previa
+                      </span>
+                    </span>
+                  </button>
 
-                <div className="mt-5">
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="text-white font-bold text-lg tracking-tight group-hover:text-red-marvel transition-colors">
+                  <div className="flex flex-1 flex-col px-4 py-4 md:px-5">
+                    <h3 className="font-impact text-2xl uppercase italic leading-[0.9] tracking-tighter text-white sm:text-3xl">
                       {project.name}
                     </h3>
+
+                    <ol className="mt-4 flex flex-col gap-2">
+                      {beats.map(([index, label, text]) => (
+                        <li key={index} className="grid grid-cols-[1.35rem_1fr] items-baseline gap-2">
+                          <span className="font-impact text-xs italic text-red-marvel">{index}</span>
+                          <p className="text-sm leading-snug text-white/70">
+                            <span className="mr-1.5 font-impact text-sm uppercase tracking-tighter text-white/40">{label}</span>
+                            {text}
+                          </p>
+                        </li>
+                      ))}
+                    </ol>
+
+                    <p className="mt-4 border-t border-white/10 pt-3 font-impact text-[11px] uppercase tracking-tighter text-white/35">
+                      {project.techStack.join(' · ')}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] bg-red-marvel/10 text-red-marvel border border-red-marvel/20 px-2 py-0.5 rounded font-black uppercase tracking-tighter">
-                      {project.category}
-                    </span>
-                    <div className="h-1 w-1 bg-zinc-800 rounded-full"></div>
-                    <p className="text-zinc-500 text-[11px] font-medium truncate max-w-[200px]">{project.shortDescription}</p>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.techStack.map(tech => (
-                      <span key={tech} className="text-[9px] text-zinc-400 font-mono bg-zinc-900 px-1.5 py-0.5 rounded">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.article>
+              );
+            })}
           </AnimatePresence>
+        </div>
+
+        <div className="mt-16 flex flex-col items-start gap-6 border-t border-white/10 pt-10">
+          <p className="font-impact text-4xl uppercase italic leading-none tracking-tighter text-white md:text-6xl">
+            ¿Quieres una web<br /><span className="text-red-marvel">como estas?</span>
+          </p>
+          <a
+            href="https://wa.me/51936068781?text=Hola%20Daniel%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-red-marvel px-6 py-3 font-impact text-lg uppercase italic tracking-tighter text-white skew-x-[-8deg]"
+          >
+            Escríbeme por WhatsApp
+          </a>
         </div>
       </div>
     </section>

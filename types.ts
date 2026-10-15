@@ -1,17 +1,26 @@
 
-export type ProjectCategory = 'AI' | '3D' | 'Data' | 'UI/UX' | 'SaaS' | 'ERP' | 'CRM' | 'Web' | 'E-commerce';
+export type ProjectCategory = 'AI' | '3D' | 'Data' | 'UI/UX' | 'SaaS' | 'ERP' | 'CRM' | 'Web' | 'E-commerce' | 'Proyecto propio';
 
 export interface Project {
   id: string;
   name: string;
   shortDescription: string;
+  problem: string;
+  work: string;
+  outcome?: string;
   category: ProjectCategory;
   thumbnail: string;
+  slug?: string;
   demoType: 'GEMINI' | 'VISUALIZER' | 'INTERACTIVE' | 'IFRAME';
   techStack: string[];
   liveUrl?: string; // URL de Vercel/GitHub Pages
   githubUrl?: string;
   openInNewTab?: boolean;
+}
+
+export interface Client {
+  name: string;
+  logo: string;
 }
 
 export interface Message {

@@ -1,6 +1,6 @@
 {
-  "name": "Cinematic Portfolio Pro",
-  "description": "A high-end, cinematic web portfolio featuring interactive project demos, sleek animations, and enhanced security layers for professional client showcasing.",
+  "name": "Daniel Gonzales",
+  "description": "Portafolio personal de Daniel Gonzales, desarrollador web full stack. Next.js, TypeScript y Supabase.",
   "requestFramePermissions": [
     "camera",
     "microphone"

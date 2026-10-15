@@ -1,9 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '../types';
-import { auth, db, handleFirestoreError, OperationType } from '../firebase';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
 interface ProjectModalProps {
   project: Project;
@@ -13,55 +11,6 @@ interface ProjectModalProps {
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isAcquiring, setIsAcquiring] = useState(false);
-  const [isAcquired, setIsAcquired] = useState(false);
-  const user = auth.currentUser;
-
-  useEffect(() => {
-    const checkAcquisition = async () => {
-      if (!user) return;
-      const path = 'acquisitions';
-      try {
-        const q = query(
-          collection(db, path), 
-          where('userId', '==', user.uid),
-          where('projectId', '==', project.id)
-        );
-        const snapshot = await getDocs(q);
-        if (!snapshot.empty) {
-          setIsAcquired(true);
-        }
-      } catch (error) {
-        handleFirestoreError(error, OperationType.GET, path);
-      }
-    };
-    checkAcquisition();
-  }, [user, project.id]);
-
-  const handleAcquire = async () => {
-    if (!user) {
-      alert('Debes iniciar sesión para adquirir proyectos.');
-      return;
-    }
-
-    setIsAcquiring(true);
-    const path = 'acquisitions';
-    try {
-      await addDoc(collection(db, path), {
-        userId: user.uid,
-        projectId: project.id,
-        projectName: project.name,
-        acquiredAt: serverTimestamp(),
-        status: 'active'
-      });
-      setIsAcquired(true);
-      alert('¡Proyecto adquirido con éxito! Revisa tu cuenta.');
-    } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, path);
-    } finally {
-      setIsAcquiring(false);
-    }
-  };
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -78,7 +27,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
     >
-      <div className="w-full h-full flex flex-col bg-[#050505] relative">
+      <div className="w-full h-full flex flex-col bg-black relative">
         
         {/* Workspace Toolbar (Emergent Style) */}
         <div className="bg-[#0a0a0a] border-b border-zinc-800 p-4 flex items-center justify-between z-50">
@@ -105,7 +54,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           </div>
 
           {/* Browser Address Bar */}
-          <div className="hidden lg:flex flex-1 max-w-3xl mx-8 bg-[#121212] border border-zinc-800 rounded-lg px-4 py-2 items-center gap-3">
+          <div className="hidden lg:flex flex-1 max-w-3xl mx-8 bg-[#111111] border border-zinc-800 rounded-lg px-4 py-2 items-center gap-3">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 21a10.003 10.003 0 008.384-4.562l.054.091m-9.95.1a10.019 10.019 0 01-5.111-4.498m11.354 0a10.019 10.019 0 01-5.112 4.498m-.001-9.499a5.002 5.002 0 110 10.004 5.002 5.002 0 010-10.004z" />
             </svg>
@@ -124,21 +73,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           </div>
 
           <div className="flex items-center gap-3">
-             {isAcquired ? (
-               <div className="bg-green-500/10 border border-green-500/50 text-green-500 px-4 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                 Adquirido
-               </div>
-             ) : (
-               <button 
-                 disabled={isAcquiring}
-                 className="bg-white text-black px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider hover:bg-red-marvel hover:text-white transition-all disabled:opacity-50"
-                 onClick={handleAcquire}
-               >
-                 {isAcquiring ? 'Procesando...' : 'Adquirir Licencia'}
-               </button>
-             )}
-             
              <button 
                className="bg-red-marvel text-white px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider shadow-lg shadow-red-marvel/20 hover:scale-105 active:scale-95 transition-all"
                onClick={() => window.open(`https://wa.me/51936068781?text=Hola, estoy interesado en el sistema ${project.name}`, '_blank')}
@@ -146,6 +80,19 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                Me interesa
              </button>
           </div>
+        </div>
+
+        <div className="xl:hidden border-b border-zinc-800 bg-[#0a0a0a] px-4 py-3 space-y-1.5">
+          {([
+            ['Problema', project.problem],
+            ['Trabajo', project.work],
+            ...(project.outcome ? [['Resultado', project.outcome]] : []),
+          ] as [string, string][]).map(([label, text]) => (
+            <p key={label} className="text-[12px] leading-snug text-zinc-400">
+              <span className="font-black uppercase tracking-widest text-[9px] text-red-marvel">{label}. </span>
+              {text}
+            </p>
+          ))}
         </div>
 
         {/* Main Viewport Container */}
@@ -161,7 +108,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                   exit={{ opacity: 0 }}
                   className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-black"
                 >
-                  <div className="w-10 h-10 border-2 border-red-marvel border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(226,54,54,0.3)]"></div>
+                  <div className="w-10 h-10 border-2 border-red-marvel border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(255,34,34,0.55)]"></div>
                   <p className="mt-4 text-zinc-500 font-impact text-xs uppercase tracking-[0.3em] italic">Conectando con Servidor Real...</p>
                 </motion.div>
               )}
@@ -192,16 +139,17 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 </div>
               </div>
 
-              <div className="p-4 bg-zinc-900/50 rounded-xl border border-zinc-800">
-                <p className="text-[9px] text-zinc-600 font-black uppercase mb-3">Conexión de Demo</p>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] text-zinc-400 font-bold uppercase">Latencia</span>
-                  <span className="text-[10px] text-green-500 font-mono">18ms</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-zinc-400 font-bold uppercase">Protocolo</span>
-                  <span className="text-[10px] text-white font-mono">HTTPS</span>
-                </div>
+              <div className="p-4 bg-zinc-900/50 rounded-xl border border-zinc-800 space-y-3">
+                {([
+                  ['Problema', project.problem],
+                  ['Trabajo', project.work],
+                  ...(project.outcome ? [['Resultado', project.outcome]] : []),
+                ] as [string, string][]).map(([label, text]) => (
+                  <p key={label} className="text-[11px] leading-snug text-zinc-300">
+                    <span className="block text-[9px] font-black uppercase tracking-widest text-red-marvel mb-1">{label}</span>
+                    {text}
+                  </p>
+                ))}
               </div>
 
               <div className="p-4 bg-zinc-900/50 rounded-xl border border-zinc-800">
@@ -231,13 +179,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="bg-[#080808] border-t border-zinc-800 px-6 py-2 flex justify-between items-center text-[9px] font-mono text-zinc-700 uppercase">
+        <div className="bg-[#050505] border-t border-zinc-800 px-6 py-2 flex justify-between items-center text-[9px] font-mono text-zinc-700 uppercase">
           <div className="flex items-center gap-6">
             <span>LIVE_STREAM_ACTIVE</span>
             <span>|</span>
             <span>ENVIROMENT: {project.id}-PRO-V4</span>
           </div>
-          <div>BUGLE_DIGITAL_WORKSPACE © 2026</div>
+          <div>DANIEL_GONZALES © 2026</div>
         </div>
 
       </div>

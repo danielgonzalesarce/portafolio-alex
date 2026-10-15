@@ -1,200 +1,370 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ViewState } from '../App';
 
 interface InternalPageProps {
   view: ViewState;
   onClose: () => void;
+  onViewChange: (view: ViewState) => void;
 }
 
-const InternalPage: React.FC<InternalPageProps> = ({ view, onClose }) => {
+const securityArticles = [
+  {
+    id: '01',
+    title: 'Quién opera esta terminal',
+    body: 'Este portafolio es de Daniel Alexander Gonzales Arce, desarrollador web en Lima, Perú. Esta página no es un medio de terceros ni una plataforma con cuentas de usuario.',
+  },
+  {
+    id: '02',
+    title: 'Qué datos se piden',
+    body: 'El formulario de contacto pide nombre, correo, teléfono, empresa y el detalle del encargo. Esos datos viajan en un mensaje de WhatsApp que tú envías. El sitio no guarda contraseñas ni abre una cuenta a tu nombre.',
+  },
+  {
+    id: '03',
+    title: 'Para qué se usan',
+    body: 'Solo para responder tu consulta y cotizar un proyecto. No se venden, no se alquilan y no se usan para publicidad de terceros. Si el mensaje no lleva a un encargo, no entra a ninguna base comercial.',
+  },
+  {
+    id: '04',
+    title: 'Canal y cifrado en tránsito',
+    body: 'La terminal se sirve por HTTPS. El mensaje sale hacia WhatsApp, cuyo tratamiento lo define Meta. En el portafolio no hay panel de login ni archivo de sesiones.',
+  },
+  {
+    id: '05',
+    title: 'Cuánto tiempo quedan',
+    body: 'El texto permanece en el chat de WhatsApp del titular hasta que se borre. No hay otra copia automática dentro de este sitio. Puedes pedir que se elimine la conversación por el mismo número.',
+  },
+  {
+    id: '06',
+    title: 'Tus derechos',
+    body: 'Puedes pedir acceso, corrección o borrado de lo que enviaste. Escríbelo por la línea +51 936 068 781 indicando tu nombre y el medio por el que contactaste. La respuesta sale por ese mismo canal.',
+  },
+  {
+    id: '07',
+    title: 'Sitios enlazados',
+    body: 'Cada proyecto abre su propio dominio (Vercel o GitHub Pages). Esas páginas tienen sus propias reglas. Aquí solo publico el enlace y una ficha. No controlo las cookies de esos destinos.',
+  },
+  {
+    id: '08',
+    title: 'Menores y cambios',
+    body: 'Este servicio está dirigido a negocios y personas adultas. Esta edición de políticas corresponde a 2026 y se actualiza en esta misma página, sin aviso por correo porque el sitio no guarda una lista de suscriptores.',
+  },
+];
+
+const termsArticles = [
+  {
+    id: '01',
+    title: 'Qué es este sitio',
+    body: 'Es un portafolio para mostrar trabajo publicado: sitios, tiendas y sistemas. Recorrer la terminal, leer las fichas o abrir un demo no crea un contrato.',
+  },
+  {
+    id: '02',
+    title: 'Cómo se encarga un proyecto',
+    body: 'El acuerdo nace cuando hay alcance, precio y plazo confirmados por WhatsApp o por escrito. Un mensaje de interés no reserva agenda ni fija un costo.',
+  },
+  {
+    id: '03',
+    title: 'Propiedad del trabajo',
+    body: 'El código y el diseño entregados en un encargo se ceden según lo pactado en esa pieza. Este portafolio y los textos de portada siguen siendo de Daniel Alexander Gonzales Arce.',
+  },
+  {
+    id: '04',
+    title: 'Demos y enlaces vivos',
+    body: 'Los sitios de la galería pueden cambiar, pausarse o mover de dominio. Una captura o una ficha describen el estado al momento de publicarse, no una promesa eterna de disponibilidad.',
+  },
+  {
+    id: '05',
+    title: 'Resultados',
+    body: 'No se prometen ventas, posiciones en buscadores ni resultados comerciales. El encargo cubre el producto digital acordado: páginas, flujos y publicación. El desempeño del negocio depende de quien lo opera.',
+  },
+  {
+    id: '06',
+    title: 'Uso de la terminal',
+    body: 'Puedes leer, compartir el enlace y contactar. No uses el sitio para suplantar a Daniel Gonzales, copiar las fichas como si fueran tuyas o saturar el canal de contacto con mensajes automáticos.',
+  },
+  {
+    id: '07',
+    title: 'Ley y contacto',
+    body: 'Estos términos se leen bajo la ley peruana, con referencia en Lima. Dudas sobre el servicio: WhatsApp +51 936 068 781 o el perfil de LinkedIn publicado en el pie de página.',
+  },
+];
+
+const storyBlocks: { id: string; title: string; text: string; tone: 'light' | 'dark' | 'red' }[] = [
+  {
+    id: '01',
+    title: 'El origen',
+    tone: 'light',
+    text: 'Daniel Alexander Gonzales Arce estudia Diseño y Desarrollo de Software en Tecsup, en Lima. Forma en web, apps, automatización e IA, y construye proyectos propios entre clases.',
+  },
+  {
+    id: '02',
+    title: 'El oficio',
+    tone: 'dark',
+    text: 'Con clientes reales aprendió a escuchar y a convertir una necesidad en un producto que funciona. El trabajo tiene que verse y entenderse.',
+  },
+  {
+    id: '03',
+    title: 'La señal',
+    tone: 'red',
+    text: 'Este portafolio es su presentación: una señal clara de lo que sabe hacer.',
+  },
+  {
+    id: '04',
+    title: 'El siguiente paso',
+    tone: 'light',
+    text: 'Este sitio es la prueba de mi trabajo. Cada proyecto sale con el mismo estándar.',
+  },
+];
+
+const desks = [
+  {
+    n: '01',
+    role: 'Portada',
+    text: 'Jerarquía, titular y la primera pantalla. Ahí se decide si el negocio se entiende.',
+  },
+  {
+    n: '02',
+    role: 'Cierre',
+    text: 'Código, formularios y el enlace que el cliente puede enviar el mismo día.',
+  },
+  {
+    n: '03',
+    role: 'Publicación',
+    text: 'Cada encargo queda con nombre, ficha y sitio en línea.',
+  },
+];
+
+const profileFacts = [
+  { label: 'Oficio', value: 'Desarrollo web fullstack' },
+  { label: 'Formación', value: 'Tecsup, Lima' },
+  { label: 'Ciudad', value: 'Lima, Perú' },
+  { label: 'Contacto', value: '+51 936 068 781' },
+];
+
+const TeamPortrait: React.FC = () => {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <div className="relative min-h-[28rem] overflow-hidden border-b border-white/10 bg-[#111111] lg:h-full lg:border-b-0 lg:border-r">
+      {failed ? (
+        <div className="grid h-full min-h-[28rem] place-items-center font-impact text-8xl italic text-white">DA</div>
+      ) : (
+        <img
+          src="https://github.com/danielgonzalesarce.png"
+          alt="Daniel Alexander Gonzales Arce"
+          className="absolute inset-0 h-full w-full object-cover object-top"
+          onError={() => setFailed(true)}
+        />
+      )}
+      <span className="absolute bottom-5 left-5 bg-black/80 px-3 py-1 font-impact text-sm uppercase italic tracking-wide text-white">
+        Editor en jefe
+      </span>
+    </div>
+  );
+};
+
+const TeamPage: React.FC<{ onViewChange: (view: ViewState) => void }> = ({ onViewChange }) => (
+  <div className="relative space-y-16 md:space-y-24">
+    <header className="relative max-w-5xl">
+      <p className="mb-4 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Redacción · Lima, Perú</p>
+      <h2 className="font-impact text-7xl uppercase italic leading-none tracking-tighter text-white md:text-[10rem]">
+        EL <span className="text-red-marvel">AUTOR</span>
+      </h2>
+      <h3 className="marvel-text-outline -mt-2 font-impact text-4xl uppercase leading-none tracking-tighter md:text-7xl">
+        una sola firma
+      </h3>
+      <p className="mt-8 max-w-2xl text-base font-bold leading-relaxed text-zinc-400 md:text-lg">
+        Daniel Alexander Gonzales Arce diseña, desarrolla y publica. La misma persona responde por la ficha y por el sitio en vivo.
+      </p>
+    </header>
+
+    <article className="grid grid-cols-1 border border-white/10 bg-[#0a0a0a] lg:grid-cols-[minmax(0,460px)_1fr]">
+      <TeamPortrait />
+      <div className="flex flex-col justify-between gap-10 p-8 md:p-12">
+        <div>
+          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.45em] text-red-marvel">Fullstack · Tecsup · Lima</p>
+          <h3 className="font-impact text-5xl uppercase italic leading-[0.85] tracking-tighter text-white md:text-7xl">
+            Daniel Alexander<br />Gonzales Arce
+          </h3>
+          <div className="mt-8 max-w-xl space-y-4 text-sm font-medium leading-relaxed text-zinc-300 md:text-base">
+            <p>
+              Estudia Diseño y Desarrollo de Software en Tecsup. Construye sitios, tiendas y sistemas para negocios en Lima, de la primera pantalla al enlace publicado.
+            </p>
+            <p>
+              El archivo cubre repostería, flores, hotelería, empresa, comercio, acero, gimnasios y elevadores.
+            </p>
+          </div>
+        </div>
+
+        <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {profileFacts.map((fact) => (
+            <div key={fact.label} className="border border-white/10 bg-black px-4 py-4">
+              <dt className="text-[10px] font-black uppercase tracking-[0.35em] text-red-marvel">{fact.label}</dt>
+              <dd className="mt-2 font-impact text-xl uppercase italic leading-none tracking-tight text-white">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a
+            href="https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383/"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-white px-8 py-4 font-impact text-2xl uppercase italic text-black shadow-[10px_10px_0px_rgba(255,255,255,0.1)] skew-x-[-12deg] transition-all hover:bg-red-marvel hover:text-white"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/danielgonzalesarce"
+            target="_blank"
+            rel="noreferrer"
+            className="font-impact text-xl uppercase italic text-white transition-colors hover:text-red-marvel"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://wa.me/51936068781"
+            target="_blank"
+            rel="noreferrer"
+            className="font-impact text-xl uppercase italic text-white transition-colors hover:text-red-marvel"
+          >
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <section>
+      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Cómo se reparte el trabajo</p>
+          <h3 className="font-impact text-5xl uppercase italic leading-none tracking-tighter text-white md:text-7xl">
+            La <span className="text-red-marvel">mesa</span>
+          </h3>
+        </div>
+        <button
+          onClick={() => onViewChange('historia')}
+          className="text-left font-impact text-xl uppercase italic text-red-marvel transition-colors hover:text-white"
+        >
+          Leer la historia →
+        </button>
+      </div>
+      <ol className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        {desks.map((desk) => (
+          <li key={desk.n} className="border border-white/10 bg-[#0a0a0a] px-6 py-8">
+            <p className="font-impact text-4xl italic leading-none text-red-marvel">{desk.n}</p>
+            <h4 className="mt-6 font-impact text-3xl uppercase italic tracking-tighter text-white">{desk.role}</h4>
+            <p className="mt-3 text-sm leading-relaxed text-zinc-400">{desk.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+);
+
+const PolicyList: React.FC<{ items: { id: string; title: string; body: string }[] }> = ({ items }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {items.map((item) => (
+      <article key={item.id} className="bg-zinc-900 border-l-4 border-red-marvel p-8">
+        <span className="text-red-marvel font-black text-[10px] tracking-[0.4em] mb-4 block">ARTÍCULO {item.id}</span>
+        <h3 className="text-3xl font-impact text-white uppercase mb-4 italic">{item.title}</h3>
+        <p className="text-zinc-400 text-sm font-bold leading-relaxed uppercase">{item.body}</p>
+      </article>
+    ))}
+  </div>
+);
+
+const InternalPage: React.FC<InternalPageProps> = ({ view, onClose, onViewChange }) => {
   const renderContent = () => {
     switch (view) {
-      case 'equipo':
+      case 'historia':
         return (
-          <div className="space-y-12 md:space-y-20">
-            <h2 className="text-7xl md:text-[10rem] font-impact uppercase italic leading-none text-white tracking-tighter">
-              NUESTRO <span className="text-red-marvel">STAFF</span>
-            </h2>
-            
-            <div className="flex flex-col lg:flex-row gap-12 items-center lg:items-start bg-zinc-900/40 p-8 md:p-12 border border-white/5 rounded-3xl relative overflow-hidden group">
-               {/* Decorative background element */}
-               <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                  <span className="font-impact text-9xl text-white italic">EDITOR</span>
-               </div>
+          <div className="relative space-y-16 md:space-y-24">
+            <div className="pointer-events-none absolute -top-10 left-0 select-none overflow-hidden opacity-[0.07]">
+              <span className="block font-impact text-[28vw] uppercase leading-none tracking-tighter text-white">SEÑAL</span>
+            </div>
 
-               {/* Photo Section */}
-               <div className="relative w-full max-w-sm aspect-square">
-                  <div className="absolute inset-0 bg-red-marvel/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-                  <div className="relative h-full w-full rounded-2xl overflow-hidden border-4 border-zinc-800 group-hover:border-red-marvel transition-colors bg-zinc-950">
-                     {/* Placeholder loading effect */}
-                     <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                        <div className="w-full h-full bg-[radial-gradient(circle,rgba(226,54,54,0.2)_1px,transparent_1px)] bg-[size:20px_20px] animate-[pulse_3s_infinite]"></div>
-                     </div>
-                     
-                     <img 
-                        src="https://github.com/danielgonzalesarce.png" 
-                        alt="Daniel Gonzales Arce" 
-                        className="relative z-10 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=800&auto=format&fit=crop";
-                        }}
-                     />
-                     
-                     {/* HUD Overlay on image */}
-                     <div className="absolute inset-0 border-[20px] border-black/20 pointer-events-none z-20"></div>
-                     <div className="absolute bottom-4 left-4 z-30 bg-red-marvel text-white text-[8px] font-black px-2 py-1 uppercase tracking-widest italic shadow-xl">
-                        ID: DG-001
-                     </div>
-                  </div>
-               </div>
+            <div className="relative">
+              <p className="mb-4 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Edición fundacional · Lima, Perú</p>
+              <h2 className="font-impact text-7xl uppercase italic leading-none tracking-tighter text-white md:text-[10rem]">
+                LA <span className="text-red-marvel">HISTORIA</span>
+              </h2>
+              <h3 className="marvel-text-outline -mt-2 font-impact text-4xl uppercase leading-none tracking-tighter md:text-7xl">
+                de una señal
+              </h3>
+            </div>
 
-               {/* Info Section */}
-               <div className="flex-1 space-y-8 relative z-10 text-center lg:text-left">
-                  <div>
-                    <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-                      <span className="w-2 h-2 bg-red-marvel rounded-full animate-pulse"></span>
-                      <span className="text-red-marvel font-black text-xs uppercase tracking-[0.5em] block">AUTORIZADO: ACCESO NIVEL 5</span>
-                    </div>
-                    <h3 className="text-5xl md:text-7xl font-impact text-white uppercase italic leading-none tracking-tighter">
-                      DANIEL ALEXANDER <br/>GONZALES ARCE
+            <div className="relative space-y-8 md:space-y-12">
+              {storyBlocks.map((block, index) => {
+                const toTheRight = index % 2 === 1;
+                const tone =
+                  block.tone === 'light'
+                    ? 'bg-white text-black'
+                    : block.tone === 'red'
+                      ? 'bg-red-marvel text-white'
+                      : 'border-l-4 border-red-marvel bg-zinc-900 text-white';
+                return (
+                  <motion.article
+                    key={block.id}
+                    initial={{ opacity: 0, x: toTheRight ? 40 : -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    className={`relative w-full p-8 italic md:w-[72%] md:p-12 ${tone} ${toTheRight ? 'md:ml-auto' : 'md:mr-auto'}`}
+                  >
+                    <span className={`mb-4 block font-impact text-sm not-italic tracking-[0.4em] ${block.tone === 'light' ? 'text-red-marvel' : 'text-white/70'}`}>
+                      {block.id}
+                    </span>
+                    <h3 className="mb-6 font-impact text-4xl uppercase leading-none tracking-tighter md:text-6xl">
+                      {block.title}
                     </h3>
-                    <p className="text-zinc-500 font-impact text-2xl uppercase mt-2 tracking-tighter">EDITOR EN JEFE / FULLSTACK ARCHITECT</p>
-                  </div>
-
-                  <div className="space-y-4 max-w-xl mx-auto lg:mx-0">
-                    <p className="text-zinc-400 font-bold text-sm leading-relaxed uppercase">
-                      Estratega digital especializado en la construcción de infraestructuras visuales de alto impacto. Responsable de la visión tecnológica de "El Bugle Digital" y del despliegue de sistemas SaaS escalables.
+                    <p className={`max-w-2xl text-base font-bold not-italic leading-relaxed md:text-lg ${block.tone === 'dark' ? 'text-zinc-300' : ''}`}>
+                      {block.text}
                     </p>
-                    <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-4">
-                       {['Liderazgo', 'Visión 360', 'Código Balístico', 'Diseño Élite'].map(tag => (
-                         <span key={tag} className="bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-black uppercase text-zinc-500 tracking-widest hover:text-red-marvel hover:border-red-marvel/30 transition-colors cursor-default">{tag}</span>
-                       ))}
-                    </div>
-                  </div>
+                  </motion.article>
+                );
+              })}
+            </div>
 
-                  <div className="pt-8 flex flex-col md:flex-row items-center gap-6 justify-center lg:justify-start">
-                     <button 
-                        onClick={() => window.open('https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383/', '_blank')}
-                        className="bg-white text-black px-10 py-4 font-impact text-2xl uppercase italic skew-x-[-12deg] hover:bg-red-marvel hover:text-white transition-all transform hover:scale-105 flex items-center gap-3 shadow-[10px_10px_0px_rgba(255,255,255,0.1)] active:translate-y-1"
-                     >
-                        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                        MI PERFIL PROFESIONAL
-                     </button>
-                     
-                     <div className="text-left font-mono text-[9px] text-zinc-600 space-y-1 border-l border-zinc-800 pl-6">
-                        <p>ID_TAG: BUGLE-01-DGA</p>
-                        <p>STATUS: ACTIVE_DEVOLOPER</p>
-                        <p>LOCATION: LIMA, PE / GLOBAL</p>
-                        <p>LAST_SYNC: {new Date().toLocaleDateString()}</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
+            <button
+              onClick={() => onViewChange('main')}
+              className="bg-white px-10 py-4 font-impact text-2xl uppercase italic text-black skew-x-[-12deg] shadow-[10px_10px_0px_rgba(255,255,255,0.1)] transition-all hover:bg-red-marvel hover:text-white"
+            >
+              Ver la portada
+            </button>
           </div>
         );
-      case 'archivos':
-        return (
-          <div className="space-y-20">
-            <h2 className="text-8xl md:text-[12rem] font-impact uppercase italic leading-none text-white tracking-tighter">
-              LOS <span className="text-red-marvel">ARCHIVOS</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {[1, 2, 3, 4, 5, 6].map(i => (
-                <div key={i} className="bg-zinc-900 border-l-4 border-red-marvel p-8 group hover:bg-zinc-800 transition-colors">
-                  <span className="text-red-marvel font-black text-[10px] tracking-[0.4em] mb-4 block">EXPEDIENTE #BUG-{i}00X</span>
-                  <h3 className="text-3xl font-impact text-white uppercase mb-4 italic">Operación: {['Aurora', 'Nebula', 'Cortex', 'Vortex', 'Sentinel', 'Titan'][i-1]}</h3>
-                  <p className="text-zinc-500 text-sm font-bold leading-relaxed mb-6">INTELIGENCIA: Desarrollo de arquitectura escalable para entorno de alto tráfico. Implementación exitosa de sistemas redundantes.</p>
-                  <div className="h-1 w-0 group-hover:w-full bg-red-marvel transition-all duration-500"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      case 'taquilla':
-        return (
-          <div className="space-y-20">
-            <h2 className="text-8xl md:text-[12rem] font-impact uppercase italic leading-none text-white tracking-tighter">
-              LA <span className="text-red-marvel">TAQUILLA</span>
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-               <div className="bg-white text-black p-12 italic">
-                  <h3 className="text-6xl font-impact uppercase leading-none mb-6">RÉCORD DE<br/>NOTICIAS</h3>
-                  <div className="text-9xl font-impact tracking-tighter mb-4">+350%</div>
-                  <p className="text-xl font-bold uppercase tracking-tight border-t-4 border-black pt-4">Incremento en Conversión Digital para Clientes de Portada</p>
-               </div>
-               <div className="bg-red-marvel text-white p-12 italic">
-                  <h3 className="text-6xl font-impact uppercase leading-none mb-6">SOLD OUT<br/>CAMPAIGNS</h3>
-                  <div className="text-9xl font-impact tracking-tighter mb-4">98/100</div>
-                  <p className="text-xl font-bold uppercase tracking-tight border-t-4 border-white pt-4">Tasa de éxito en lanzamiento de MVPs y Productos Visuales</p>
-               </div>
-            </div>
-          </div>
-        );
-      case 'imax':
-        return (
-          <div className="space-y-20">
-            <h2 className="text-8xl md:text-[12rem] font-impact uppercase italic leading-none text-white tracking-tighter">
-              TEC. <span className="text-red-marvel">IMAX</span>
-            </h2>
-            <div className="flex flex-col gap-4">
-               {['REACT 19', 'TYPESCRIPT', 'FRAMER MOTION', 'TAILWIND CSS', 'GOOGLE GENAI', 'NODE.JS'].map((tech, idx) => (
-                 <div key={tech} className="flex items-center gap-10 border-b border-white/10 py-8 group">
-                    <span className="text-zinc-700 font-impact text-4xl">0{idx + 1}</span>
-                    <h3 className="text-7xl md:text-9xl font-impact text-white uppercase tracking-tighter italic group-hover:text-red-marvel transition-colors cursor-default">{tech}</h3>
-                    <div className="hidden lg:block h-px flex-1 bg-white/5"></div>
-                    <span className="text-[10px] font-black tracking-widest text-zinc-600 uppercase">Estado: Optimizado</span>
-                 </div>
-               ))}
-            </div>
-          </div>
-        );
-      case 'clasificados':
-        return (
-          <div className="space-y-20">
-             <div className="flex justify-between items-end border-b-4 border-white pb-6">
-                <h2 className="text-8xl font-impact uppercase italic leading-none text-white tracking-tighter">CLASIFICADOS</h2>
-                <span className="text-zinc-500 font-impact text-2xl uppercase">Edición 2026</span>
-             </div>
-             <div className="columns-1 md:columns-2 lg:columns-3 gap-12 space-y-12">
-                {[
-                  { t: 'SE BUSCA: MARCAS ATREVIDAS', d: 'Buscamos socios para transformar identidades digitales aburridas en imperios visuales. Requisito: No tener miedo al éxito.' },
-                  { t: 'SERVICIO: CÓDIGO BALÍSTICO', d: 'Desarrollo Fullstack con tiempos de entrega de precisión quirúrgica. Garantía de por vida en arquitectura.' },
-                  { t: 'AVISO: IA GENERATIVA', d: 'Entrenamos agentes Gemini para automatizar tu flujo de trabajo. El futuro es ahora, no te quedes en el pasado.' },
-                  { t: 'VENDO: INTERFACES DE LUJO', d: 'Diseños UI que hacen que la competencia se vea obsoleta. Alta fidelidad garantizada.' },
-                  { t: 'URGENTE: TRANSFORMACIÓN 360', d: 'Migración de legacy apps a ecosistemas modernos. Sin pérdida de datos, solo ganancia de velocidad.' },
-                  { t: 'TRATO DIRECTO: EL BUGLE', d: 'Consultoría personalizada para startups en etapa de escalado. Precios competitivos, resultados de portada.' },
-                ].map((item, i) => (
-                  <div key={i} className="break-inside-avoid border border-white/20 p-6 bg-zinc-900/30">
-                     <h4 className="font-impact text-2xl text-red-marvel uppercase mb-4 italic underline decoration-2">{item.t}</h4>
-                     <p className="text-sm font-bold text-zinc-300 uppercase leading-snug">{item.d}</p>
-                     <p className="mt-4 text-[10px] text-zinc-500 font-black tracking-widest italic">CONTACTO: +51 936068781</p>
-                  </div>
-                ))}
-             </div>
-          </div>
-        );
+      case 'equipo':
+        return <TeamPage onViewChange={onViewChange} />;
       case 'seguridad':
+        return (
+          <div className="space-y-12">
+             <div className="bg-red-marvel text-white p-4 font-impact text-2xl inline-block skew-x-[-10deg] uppercase italic">
+                PROTOCOLO DE ACCESO: SECURITY_V4
+             </div>
+             <h2 className="text-5xl md:text-7xl font-impact text-white uppercase italic tracking-tighter leading-none">
+               Políticas de <span className="text-red-marvel">seguridad</span> y privacidad
+             </h2>
+             <p className="max-w-3xl font-mono text-zinc-400 text-sm leading-relaxed uppercase">
+               [SISTEMA] Comunicado de Daniel Gonzales, edición 2026. Esta página explica qué datos salen del sitio, a dónde van y cómo pedir que se borren. No hay cuentas, no hay panel y no hay archivo oculto de visitantes.
+             </p>
+             <PolicyList items={securityArticles} />
+             <p className="font-mono text-zinc-600 text-xs uppercase">--- Fin del comunicado de seguridad ---</p>
+          </div>
+        );
       case 'terminos':
         return (
-          <div className="max-w-4xl mx-auto space-y-12 py-20">
-             <div className="bg-red-marvel text-white p-4 font-impact text-2xl inline-block skew-x-[-10deg] uppercase italic mb-10">
-                PROTOCOLO DE ACCESO: {view === 'seguridad' ? 'SECURITY_V4' : 'TERMS_OF_USE'}
+          <div className="space-y-12">
+             <div className="bg-red-marvel text-white p-4 font-impact text-2xl inline-block skew-x-[-10deg] uppercase italic">
+                PROTOCOLO DE ACCESO: TERMS_OF_USE
              </div>
-             <h2 className="text-6xl font-impact text-white uppercase italic tracking-tighter">
-               {view === 'seguridad' ? 'POLÍTICAS DE SEGURIDAD Y PRIVACIDAD' : 'TÉRMINOS Y CONDICIONES DEL SERVICIO'}
+             <h2 className="text-5xl md:text-7xl font-impact text-white uppercase italic tracking-tighter leading-none">
+               Términos y <span className="text-red-marvel">condiciones</span> del servicio
              </h2>
-             <div className="space-y-8 font-mono text-zinc-400 text-sm leading-relaxed uppercase">
-                <p>[SISTEMA] Iniciando despliegue de políticas corporativas Bugle Digital v2026...</p>
-                <p>1. PROTECCIÓN DE DATOS: Todos los activos compartidos en esta terminal están bajo cifrado de grado militar AES-256. No recolectamos datos personales sin el consentimiento explícito del agente.</p>
-                <p>2. PROPIEDAD INTELECTUAL: El código fuente, los diseños y la marca Bugle Digital son propiedad exclusiva. La replicación sin licencia será tratada como brecha de seguridad.</p>
-                <p>3. USO DE LA TERMINAL: Se prohíbe el uso de scripts automatizados para la extracción de datos (scraping) fuera de los canales autorizados por la API.</p>
-                <p>4. LIMITACIÓN DE RESPONSABILIDAD: No nos hacemos responsables de las ganancias explosivas que tu negocio pueda experimentar tras contratar nuestros servicios.</p>
-                <p>--- FIN DEL COMUNICADO ---</p>
-             </div>
+             <p className="max-w-3xl font-mono text-zinc-400 text-sm leading-relaxed uppercase">
+               [SISTEMA] Condiciones de uso del sitio y de los encargos. Leer el portafolio es libre. Encargar un proyecto es un acuerdo aparte.
+             </p>
+             <PolicyList items={termsArticles} />
+             <p className="font-mono text-zinc-600 text-xs uppercase">--- Fin del comunicado de servicio ---</p>
           </div>
         );
       default: return null;
