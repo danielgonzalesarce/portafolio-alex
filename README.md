@@ -1,24 +1,48 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
-
 # Daniel Gonzales
 
-Portafolio personal de Daniel Gonzales, desarrollador web full stack.
+Portafolio personal de Daniel Alexander Gonzales Arce, desarrollador web full stack en Lima. Presenta su trabajo, sus servicios y un contacto directo por WhatsApp.
 
-# Run and deploy your AI Studio app
+## Secciones
 
-This contains everything you need to run your app locally.
+- **Inicio.** Presentación y llamada a la acción.
+- **Clientes.** Negocios que han confiado en su trabajo.
+- **Servicios.** Páginas web, aplicaciones, apps móviles y automatización.
+- **Proyectos.** Casos reales con vista previa, filtro por tipo y captura en `public/projects`.
+- **Proceso.** Cómo arranca y se entrega un proyecto.
+- **Sobre mí.** Perfil, stack y enlaces de contacto.
+- **Contacto.** Formulario que abre WhatsApp con el mensaje listo para enviar.
 
-View your app in AI Studio: https://ai.studio/apps/92bfe4b6-3518-4751-b3c8-d3262d86bd01
+## Stack
 
-## Run Locally
+React 19, TypeScript, Vite y Tailwind CSS. Las animaciones usan Framer Motion.
 
-**Prerequisites:**  Node.js
+## Desarrollo local
 
+Requiere Node.js.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev
+```
+
+La aplicación queda en `http://localhost:3000`.
+
+```bash
+npm run lint
+npm run build
+```
+
+`npm run lint` revisa los tipos. `npm run build` genera la carpeta `dist`.
+
+## Imágenes
+
+| Archivo | Uso |
+| --- | --- |
+| `public/logos/daniel-imagen.png` | Foto de la sección Sobre mí |
+| `public/logos/*.png` | Logos de clientes |
+| `public/projects/<slug>.png` | Captura de cada proyecto. Si el archivo no existe, se usa la imagen de respaldo |
+
+## Contacto
+
+- WhatsApp: [936 068 781](https://wa.me/51936068781?text=Hola%20Daniel%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto)
+- LinkedIn: [daniel-alexander-gonzales-arce](https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383)
