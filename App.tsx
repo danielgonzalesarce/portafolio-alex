@@ -14,6 +14,7 @@ import ProjectModal from './components/ProjectModal';
 import Footer from './components/Footer';
 import InternalPage from './components/InternalPage';
 import WhatsAppButton from './components/WhatsAppButton';
+import { Analytics } from '@vercel/analytics/react';
 import { Project } from './types';
 
 export type ViewState = 'main' | 'seguridad' | 'terminos' | 'equipo' | 'historia';
@@ -103,6 +104,7 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       <WhatsAppButton />
+      <Analytics />
     </div>
   );
 };
