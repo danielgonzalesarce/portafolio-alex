@@ -35,7 +35,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             <button 
               onClick={onClose} 
               className="p-2.5 hover:bg-zinc-900 rounded-lg transition-colors text-zinc-500 hover:text-white"
-              title="Cerrar Workspace"
+              aria-label="Cerrar vista previa"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -43,7 +43,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             </button>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <h2 className="text-white font-bold text-sm tracking-tight">{project.name}</h2>
+                <p className="text-white font-bold text-sm tracking-tight">{project.name}</p>
                 <span className="bg-red-marvel/10 text-red-marvel text-[9px] font-black px-1.5 py-0.5 rounded border border-red-marvel/20 uppercase tracking-tighter italic">DEMO_LIVE</span>
               </div>
               <div className="flex items-center gap-2 mt-0.5">
@@ -60,12 +60,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             </svg>
             <span className="text-[11px] text-zinc-500 font-mono truncate select-all">{project.liveUrl}</span>
             <div className="flex-1"></div>
-            <button onClick={() => window.open(project.liveUrl, '_blank')} className="p-1 hover:text-white text-zinc-600 transition-colors mr-2" title="Abrir en nueva pestaña">
+            <button onClick={() => window.open(project.liveUrl, '_blank', 'noopener,noreferrer')} className="p-1 hover:text-white text-zinc-600 transition-colors mr-2" aria-label="Abrir en nueva pestaña">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </button>
-            <button onClick={handleRefresh} className="p-1 hover:text-white text-zinc-600 transition-colors" title="Recargar">
+            <button onClick={handleRefresh} className="p-1 hover:text-white text-zinc-600 transition-colors" aria-label="Recargar">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
@@ -75,7 +75,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           <div className="flex items-center gap-3">
              <button 
                className="bg-red-marvel text-white px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider shadow-lg shadow-red-marvel/20 hover:scale-105 active:scale-95 transition-all"
-               onClick={() => window.open(`https://wa.me/51936068781?text=Hola, estoy interesado en el sistema ${project.name}`, '_blank')}
+               onClick={() => window.open(`https://wa.me/51936068781?text=${encodeURIComponent(`Hola, estoy interesado en el sistema ${project.name}`)}`, '_blank', 'noopener,noreferrer')}
              >
                Me interesa
              </button>

@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { CLIENTS } from '../constants';
 
-const ClientMark: React.FC<{ name: string; logo: string }> = ({ name, logo }) => {
+const logoSize: Record<string, { width: number; height: number }> = {
+  '/logos/studio-paucolor.png': { width: 608, height: 186 },
+  '/logos/go-gym.png': { width: 892, height: 280 },
+};
+
+const ClientMark: React.FC<{ name: string; logo: string; eager?: boolean }> = ({ name, logo, eager = false }) => {
   const [failed, setFailed] = useState(false);
+  const size = logoSize[logo] ?? { width: 640, height: 200 };
 
   return (
     <li className="group flex flex-col items-center gap-4">
@@ -10,7 +16,10 @@ const ClientMark: React.FC<{ name: string; logo: string }> = ({ name, logo }) =>
         {!failed && (
           <img
             src={logo}
-            alt=""
+            alt={`Logo de ${name}`}
+            width={size.width}
+            height={size.height}
+            loading={eager ? 'eager' : 'lazy'}
             className="h-16 w-auto max-w-full object-contain grayscale brightness-0 invert transition duration-300 group-hover:brightness-100 group-hover:grayscale-0 group-hover:invert-0"
             onError={() => setFailed(true)}
           />
@@ -31,8 +40,8 @@ const Clients: React.FC = () => {
           Han confiado<br /><span className="text-red-marvel">en mí</span>
         </h2>
         <ul className="grid grid-cols-2 items-start justify-items-center gap-x-6 gap-y-10 md:grid-cols-3">
-          {CLIENTS.map((client) => (
-            <ClientMark key={client.name} name={client.name} logo={client.logo} />
+          {CLIENTS.map((client, index) => (
+            <ClientMark key={client.name} name={client.name} logo={client.logo} eager={index === 0} />
           ))}
         </ul>
       </div>

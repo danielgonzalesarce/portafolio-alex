@@ -24,12 +24,13 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+    <section id="inicio" className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+      <h1 className="sr-only">Daniel Gonzales — Desarrollador Web Full Stack en Lima</h1>
       {/* 1. Fondo: Texto STACK Monumental */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.07] pointer-events-none select-none overflow-hidden z-0">
-        <h1 className="font-impact text-[45vw] tracking-tighter leading-none text-white whitespace-nowrap">
+        <span className="font-impact text-[45vw] tracking-tighter leading-none text-white whitespace-nowrap">
           STACK
-        </h1>
+        </span>
       </div>
 
       {/* 2. Efecto de Luz Roja (Glow) y Anillos */}
@@ -66,12 +67,12 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h2 className="text-white font-impact text-[13vw] md:text-[14rem] lg:text-[18rem] leading-[0.75] tracking-tighter uppercase">
+            <div className="text-white font-impact text-[13vw] md:text-[14rem] lg:text-[18rem] leading-[0.75] tracking-tighter uppercase">
               PORTAFOLIO
-            </h2>
-            <h3 className="marvel-text-outline font-impact text-[6.5vw] md:text-[6rem] lg:text-[8rem] leading-none tracking-tighter uppercase -mt-4">
+            </div>
+            <div className="marvel-text-outline font-impact text-[6.5vw] md:text-[6rem] lg:text-[8rem] leading-none tracking-tighter uppercase -mt-4">
               WEB FULLSTACK
-            </h3>
+            </div>
           </motion.div>
         </div>
 

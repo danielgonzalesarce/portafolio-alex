@@ -73,7 +73,10 @@ const About: React.FC = () => {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(255,34,34,0.22),transparent_58%)]" />
             <img
               src="/logos/daniel-imagen.png"
-              alt="Daniel Gonzales"
+              alt="Daniel Gonzales, desarrollador web full stack en Lima"
+              width={1254}
+              height={1254}
+              loading="lazy"
               className="relative z-10 h-auto w-full max-w-[300px] rounded-full object-contain"
             />
           </div>

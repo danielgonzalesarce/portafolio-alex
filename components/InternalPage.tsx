@@ -152,6 +152,9 @@ const TeamPortrait: React.FC = () => {
         <img
           src="https://github.com/danielgonzalesarce.png"
           alt="Daniel Alexander Gonzales Arce"
+          width={460}
+          height={460}
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover object-top"
           onError={() => setFailed(true)}
         />
@@ -209,7 +212,7 @@ const TeamPage: React.FC<{ onViewChange: (view: ViewState) => void }> = ({ onVie
           <a
             href="https://www.linkedin.com/in/daniel-alexander-gonzales-arce-537576383/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="bg-white px-8 py-4 font-impact text-2xl uppercase italic text-black shadow-[10px_10px_0px_rgba(255,255,255,0.1)] skew-x-[-12deg] transition-all hover:bg-red-marvel hover:text-white"
           >
             LinkedIn
@@ -217,7 +220,7 @@ const TeamPage: React.FC<{ onViewChange: (view: ViewState) => void }> = ({ onVie
           <a
             href="https://github.com/danielgonzalesarce"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-impact text-xl uppercase italic text-white transition-colors hover:text-red-marvel"
           >
             GitHub
@@ -225,7 +228,7 @@ const TeamPage: React.FC<{ onViewChange: (view: ViewState) => void }> = ({ onVie
           <a
             href="https://wa.me/51936068781"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-impact text-xl uppercase italic text-white transition-colors hover:text-red-marvel"
           >
             WhatsApp

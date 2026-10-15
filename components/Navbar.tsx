@@ -97,13 +97,15 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
   ];
 
   return (
-    <>
-      <nav className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 pointer-events-none ${isScrolled ? 'bg-black/95 backdrop-blur-xl border-b border-red-marvel/30 py-3 px-6 md:px-12 shadow-[0_10px_30px_rgba(255,34,34,0.1)]' : 'px-6 md:px-12 py-6 bg-gradient-to-b from-black/80 to-transparent'}`}>
+    <header>
+      <nav aria-label="Principal" className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 pointer-events-none ${isScrolled ? 'bg-black/95 backdrop-blur-xl border-b border-red-marvel/30 py-3 px-6 md:px-12 shadow-[0_10px_30px_rgba(255,34,34,0.1)]' : 'px-6 md:px-12 py-6 bg-gradient-to-b from-black/80 to-transparent'}`}>
         <div className="max-w-[1800px] mx-auto flex justify-between items-center pointer-events-auto">
-          <motion.div 
+          <motion.button
+            type="button"
+            aria-label="Ir al inicio"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 cursor-pointer group"
+            className="flex items-center gap-2 cursor-pointer group border-0 bg-transparent p-0 text-left"
             onClick={() => scrollToSection()}
           >
             <div className="flex flex-col items-start gap-1">
@@ -113,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
               </div>
               <span className="hidden font-impact text-[9px] uppercase tracking-[0.22em] text-white/60 sm:block md:text-[10px]">Desarrollador Web Full Stack</span>
             </div>
-          </motion.div>
+          </motion.button>
 
           <div className="hidden lg:flex items-center gap-8 xl:gap-12 bg-black/40 px-8 py-3 rounded-full border border-white/10 backdrop-blur-md">
             {navLinks.map((link) => (
@@ -159,6 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
                   <input
                     ref={inputRef}
                     type="text"
+                    aria-label="Buscar proyectos"
                     placeholder="BUSCANDO PROYECTOS..."
                     value={searchValue}
                     onChange={handleInputChange}
@@ -169,6 +172,8 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
             </AnimatePresence>
 
             <button 
+              type="button"
+              aria-label={isSearchOpen ? 'Cerrar búsqueda' : 'Buscar proyectos'}
               onClick={handleSearchToggle}
               className={`p-2.5 rounded-full transition-all transform hover:scale-110 ${isSearchOpen ? 'bg-red-marvel text-white shadow-[0_0_15px_rgba(255,34,34,0.5)]' : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md'}`}
             >
@@ -176,6 +181,8 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
             </button>
 
             <button 
+              type="button"
+              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               onClick={() => setIsMenuOpen(!isMenuOpen)} 
               className="lg:hidden p-2.5 rounded-full bg-white/10 text-white hover:bg-white/20 backdrop-blur-md transition-all"
             >
@@ -217,6 +224,8 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
             </a>
 
             <button 
+              type="button"
+              aria-label="Cerrar menú"
               onClick={() => setIsMenuOpen(false)} 
               className="mt-12 text-red-marvel font-impact text-xl flex items-center gap-2 hover:text-white transition-colors"
             >
@@ -226,7 +235,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 

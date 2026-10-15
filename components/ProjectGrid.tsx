@@ -17,16 +17,22 @@ const categories: { label: string; value: ProjectCategory | 'Todo' }[] = [
 ];
 
 const ProjectThumb: React.FC<{ project: Project }> = ({ project }) => {
-  const localShot = project.slug ? `/projects/${project.slug}.png` : project.thumbnail;
-  const [src, setSrc] = useState(localShot);
+  const sources = project.slug
+    ? [`/projects/${project.slug}.webp`, `/projects/${project.slug}.png`, project.thumbnail]
+    : [project.thumbnail];
+  const [index, setIndex] = useState(0);
+  const src = sources[Math.min(index, sources.length - 1)];
 
   return (
     <img
       src={src}
-      alt=""
+      alt={`Captura del sitio web de ${project.name}`}
+      width={1400}
+      height={875}
+      loading="lazy"
       className="h-full w-full object-cover transition-transform duration-700 md:group-hover:scale-[1.04]"
       onError={() => {
-        if (src !== project.thumbnail) setSrc(project.thumbnail);
+        if (index < sources.length - 1) setIndex((current) => current + 1);
       }}
     />
   );
@@ -78,7 +84,7 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
             {filteredProjects.map((project) => {
               const openProject = () => {
                 if (project.openInNewTab && project.liveUrl) {
-                  window.open(project.liveUrl, '_blank');
+                  window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
                 } else {
                   onProjectSelect(project);
                 }

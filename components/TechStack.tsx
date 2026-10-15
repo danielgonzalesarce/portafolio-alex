@@ -34,9 +34,10 @@ const Mark: React.FC<{ tool: Tool }> = ({ tool }) => {
   return (
     <img
       src={`https://cdn.simpleicons.org/${tool.slug}${tool.color ? `/${tool.color}` : ''}`}
-      alt=""
+      alt={tool.name}
       width={18}
       height={18}
+      loading="lazy"
       className="h-[18px] w-[18px] object-contain"
       onError={() => setFailed(true)}
     />
