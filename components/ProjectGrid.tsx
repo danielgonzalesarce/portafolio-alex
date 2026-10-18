@@ -26,7 +26,7 @@ const ProjectThumb: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <img
       src={src}
-      alt={`Captura del sitio web de ${project.name}`}
+      alt={`Captura del sitio web de ${project.name}. ${project.shortDescription}`}
       width={1400}
       height={875}
       loading="lazy"
@@ -135,6 +135,7 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
                     <h3 className="font-impact text-2xl uppercase italic leading-[0.9] tracking-tighter text-white sm:text-3xl">
                       {project.name}
                     </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/70">{project.shortDescription}</p>
 
                     <ol className="mt-4 flex flex-col gap-2">
                       {beats.map(([index, label, text]) => (

@@ -3,23 +3,23 @@ import React from 'react';
 const services = [
   {
     n: '01',
-    title: 'Páginas web y landing pages',
-    text: 'Sitios claros para presentar un negocio, una oferta o una campaña, listos para publicarse.',
+    title: 'Páginas web para negocios',
+    text: 'El sitio explica qué ofreces, cómo contactarte y por qué elegirte. Lo dejo publicado para que lo compartas con tus clientes.',
   },
   {
     n: '02',
     title: 'Aplicaciones web a medida',
-    text: 'Productos con Next.js, TypeScript y Supabase: cuentas, datos y flujos que el negocio usa de verdad.',
+    text: 'Si necesitas cuentas, pedidos o un panel interno, lo armo con Next.js, TypeScript y Supabase. El flujo sigue cómo trabaja tu negocio, no una plantilla genérica.',
   },
   {
     n: '03',
     title: 'Apps móviles',
-    text: 'Aplicaciones para Android, pensadas para el uso diario y conectadas con el resto del sistema.',
+    text: 'Desarrollo aplicaciones Android para el uso diario, conectadas con la web o con los datos del negocio. Sirven cuando el teléfono es la herramienta de trabajo.',
   },
   {
     n: '04',
-    title: 'Automatización e integraciones con IA',
-    text: 'WhatsApp, mapas y tareas repetidas conectadas, con IA donde ahorra tiempo de verdad.',
+    title: 'Automatización con IA',
+    text: 'Conecto WhatsApp, mapas y tareas que hoy se hacen a mano. Uso la IA solo donde ahorra tiempo, no para rellenar la página.',
   },
 ];
 
@@ -30,7 +30,7 @@ const Services: React.FC = () => {
         <header className="mb-12 max-w-3xl">
           <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Servicios</p>
           <h2 className="font-impact text-5xl uppercase italic leading-[0.85] tracking-tighter text-white md:text-7xl">
-            Lo que puedo<br /><span className="text-red-marvel">construir</span>
+            Servicios de desarrollo web <span className="text-red-marvel">en Lima</span>
           </h2>
         </header>
 

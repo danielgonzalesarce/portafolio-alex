@@ -9,6 +9,7 @@ import About from './components/About';
 import ProjectGrid from './components/ProjectGrid';
 import Testimonials from './components/Testimonials';
 import Process from './components/Process';
+import Faq from './components/Faq';
 import ContactSection from './components/ContactSection';
 import ProjectModal from './components/ProjectModal';
 import Footer from './components/Footer';
@@ -84,6 +85,7 @@ const App: React.FC = () => {
               <Process />
               <About />
               <Testimonials />
+              <Faq />
               <ContactSection />
             </motion.div>
           ) : (

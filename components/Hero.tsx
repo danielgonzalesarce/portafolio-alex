@@ -73,6 +73,9 @@ const Hero: React.FC = () => {
             <div className="marvel-text-outline font-impact text-[6.5vw] md:text-[6rem] lg:text-[8rem] leading-none tracking-tighter uppercase -mt-4">
               WEB FULLSTACK
             </div>
+            <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
+              Desarrollador web full stack en Lima, Perú. Creo páginas web, tiendas online y aplicaciones a medida para negocios.
+            </p>
           </motion.div>
         </div>
 

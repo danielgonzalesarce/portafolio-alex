@@ -4,7 +4,7 @@ export const PROJECTS: Project[] = [
   {
     id: '1',
     name: "Maison d'Or Repostería",
-    shortDescription: 'Sistema de gestión y catálogo exclusivo para alta repostería artesanal.',
+    shortDescription: 'Maison d\'Or no tenía una carta pública de su repostería. El catálogo quedó publicado para que vean los productos sin llamar.',
     problem: 'La pastelería no tenía un catálogo público para mostrar sus productos.',
     work: 'Publiqué un sitio con la carta de la repostería artesanal.',
     category: 'Web',
@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
   {
     id: '2',
     name: "Florería Magaly",
-    shortDescription: 'Catálogo en línea y sistema de pedidos para florería.',
+    shortDescription: 'Florería Magaly recibía encargos solo por teléfono. El catálogo deja ver los arreglos y pedir sin depender de una llamada.',
     problem: 'Los encargos dependían del teléfono, sin un catálogo para elegir.',
     work: 'Armé un catálogo en línea para ver arreglos y encargar.',
     category: 'Web',
@@ -32,7 +32,7 @@ export const PROJECTS: Project[] = [
   {
     id: '3',
     name: "Lumina Hotel & Spa",
-    shortDescription: 'Plataforma de reservas y servicios para hotel de lujo.',
+    shortDescription: 'Lumina Hotel & Spa es un proyecto propio para mostrar habitaciones y reservas juntas. La plataforma quedó publicada con React y Firebase.',
     problem: 'El hotel necesitaba presentar habitaciones y reservas en un solo sitio.',
     work: 'Construí la plataforma de reservas y servicios con React y Firebase.',
     category: 'Proyecto propio',
@@ -46,7 +46,7 @@ export const PROJECTS: Project[] = [
   {
     id: '4',
     name: "Portafolio JB Empresa",
-    shortDescription: 'Solución corporativa para gestión de portafolios.',
+    shortDescription: 'JB Empresa no tenía una portada clara de lo que ofrece. El sitio ordena los servicios y deja un camino directo de contacto.',
     problem: 'La empresa no tenía una portada clara de lo que ofrece.',
     work: 'Desarrollé el sitio corporativo para ordenar servicios y contacto.',
     category: 'Web',
@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
   {
     id: '5',
     name: "Luxe Tech E-commerce",
-    shortDescription: 'Tienda en línea premium para tecnología de vanguardia.',
+    shortDescription: 'Luxe Tech no tenía cómo vender tecnología en línea. La tienda quedó con catálogo y un flujo de compra.',
     problem: 'La tienda de tecnología no tenía un canal de venta en línea.',
     work: 'Monté el comercio con catálogo y flujo de compra.',
     category: 'E-commerce',
@@ -74,7 +74,7 @@ export const PROJECTS: Project[] = [
   {
     id: '6',
     name: "Aceros Marín",
-    shortDescription: 'Soluciones especializadas en acero y productos metalmecánicos.',
+    shortDescription: 'Aceros Marín no mostraba su línea de acero en la web. El sitio presenta los productos metalmecánicos y cómo pedirlos.',
     problem: 'El negocio de acero no mostraba su línea de productos en la web.',
     work: 'Diseñé y publiqué el sitio de la línea metalmecánica.',
     category: 'Web',
@@ -88,7 +88,7 @@ export const PROJECTS: Project[] = [
   {
     id: '7',
     name: "Go Gym",
-    shortDescription: 'Plataforma integral para gestión y seguimiento de entrenamiento.',
+    shortDescription: 'Go Gym no tenía una página para explicar planes y entrenamiento. El sitio ya muestra esa información a quien busca el gimnasio.',
     problem: 'El gimnasio no tenía una página para mostrar planes y entrenamiento.',
     work: 'Desarrollé el sitio para presentar esa información.',
     category: 'Web',

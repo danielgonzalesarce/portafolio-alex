@@ -1,0 +1,46 @@
+import React from 'react';
+
+const questions = [
+  {
+    q: '¿Cuánto cuesta una página web en Lima?',
+    a: 'No hay un precio único. Una página simple no cuesta lo mismo que una tienda o una aplicación. El monto se define después de escuchar qué necesita el negocio, sin compromiso.',
+  },
+  {
+    q: '¿Cuánto tarda en estar lista?',
+    a: 'Una página sencilla suele estar lista en una o dos semanas. Una tienda o una aplicación toma más, según las pantallas y los datos. La fecha se acuerda antes de empezar.',
+  },
+  {
+    q: '¿Incluye dominio y hosting?',
+    a: 'El sitio puede quedar publicado y el dominio se puede gestionar en el mismo trabajo. Si ya tienes dominio o hosting, se usa el tuyo. Eso se aclara en la cotización.',
+  },
+  {
+    q: '¿Cómo cotizo por WhatsApp?',
+    a: 'Escribe al 936 068 781 o usa el botón de esta página. Cuenta el negocio y qué necesitas. La respuesta llega en menos de 24 horas.',
+  },
+];
+
+const Faq: React.FC = () => {
+  return (
+    <section id="preguntas" className="relative z-10 overflow-hidden bg-black px-6 py-24 md:px-8">
+      <div className="relative mx-auto max-w-[1400px]">
+        <header className="mb-12 max-w-3xl">
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Antes de escribir</p>
+          <h2 className="font-impact text-5xl uppercase italic leading-[0.85] tracking-tighter text-white md:text-7xl">
+            Preguntas <span className="text-red-marvel">frecuentes</span>
+          </h2>
+        </header>
+
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          {questions.map((item) => (
+            <li key={item.q} className="border border-white/10 bg-[#0a0a0a] px-6 py-8">
+              <h3 className="font-impact text-2xl uppercase italic tracking-tighter text-white">{item.q}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-400">{item.a}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
+
+export default Faq;

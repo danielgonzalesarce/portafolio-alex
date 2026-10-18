@@ -90,6 +90,7 @@ const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
         <div className="pt-8 md:pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10">
               <span className="text-[10px] font-black uppercase text-zinc-700 tracking-[0.5em]">© 2026 Daniel Gonzales. Todos los derechos reservados.</span>
+              <a href="https://danielgonzalesdev.com" className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-white">Sitio web por Daniel Gonzales · Desarrollador web en Lima, Perú</a>
            </div>
            
            <div className="flex flex-wrap justify-center gap-4 md:gap-8 items-center text-zinc-500">
