@@ -82,7 +82,7 @@ const About: React.FC = () => {
           </div>
           <div className="flex flex-col justify-center gap-6 p-8 md:p-12">
             <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
-              Soy Daniel Gonzales, desarrollador full stack en Lima. Creo páginas web, aplicaciones a medida y automatizaciones con IA para negocios que quieren verse profesionales y atraer más clientes.
+              Soy Daniel Gonzales. Hago páginas web, tiendas y aplicaciones para negocios. Estoy en Lima y trabajo a distancia con clientes de todo el Perú.
             </p>
             <p className="text-base leading-relaxed text-zinc-400 md:text-lg">
               Trabajo cada proyecto de principio a fin: escucho lo que necesitas, lo diseño, lo desarrollo y lo dejo publicado y funcionando. Desarrollo sitios web para negocios reales, como Aceros Marín, y construyo mis propias plataformas, como Lumina Hotel & Spa, un sistema de gestión para hoteles.

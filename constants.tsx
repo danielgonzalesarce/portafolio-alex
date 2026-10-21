@@ -102,9 +102,10 @@ export const PROJECTS: Project[] = [
 ];
 
 export const CLIENTS: Client[] = [
-  { name: 'Aceros Marín', logo: '/logos/aceros-marin.png' },
+  { name: 'Aceros Marín', logo: '/logos/LogoAcerosMarin.png' },
   { name: 'Studio Paucolor', logo: '/logos/studio-paucolor.png' },
   { name: 'Go Gym', logo: '/logos/go-gym.png' },
+  { name: 'Layers Corp', logo: '/logos/Angular%20Layers%20Corp.%20Logo.png' },
 ];
 
 export type Testimonial = {

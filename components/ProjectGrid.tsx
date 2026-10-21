@@ -50,36 +50,42 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
   }, [filter, searchQuery]);
 
   return (
-    <section id="portfolio" className="relative z-10 bg-[#050505] pt-12 pb-24 md:pt-16 md:pb-48">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-8">
-        
-        <header className="mb-10 md:mb-16">
-          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Galería</p>
-          <h2 className="font-impact text-5xl uppercase italic leading-none tracking-tighter text-white sm:text-6xl md:text-8xl">
+    <section id="portfolio" className="relative z-10 overflow-hidden bg-black px-6 py-24 md:px-12">
+      <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center overflow-hidden opacity-[0.07] select-none">
+        <span className="font-impact text-[42vw] leading-none tracking-tighter text-white whitespace-nowrap">WEB</span>
+      </div>
+      <div className="pointer-events-none absolute left-1/2 top-16 h-[36vw] w-[36vw] -translate-x-1/2 rounded-full bg-red-marvel/25 blur-[120px]" />
+
+      <div className="relative mx-auto max-w-[1800px]">
+        <header className="mb-14 flex flex-col items-center text-center">
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.5em] text-red-marvel">Trabajos publicados</p>
+          <h2 className="font-impact text-[14vw] uppercase leading-[0.75] tracking-tighter text-white md:text-[7.5rem]">
             Proyectos
           </h2>
-          <p className="mb-8 mt-5 max-w-xl text-sm text-white/50 md:mb-10 md:mt-6 md:text-base">
-            Sitios publicados. Toca la foto para abrir la <span className="text-white">vista previa</span>.
+          <p className="marvel-text-outline -mt-1 font-impact text-[7vw] uppercase leading-none tracking-tighter md:-mt-3 md:text-[3.5rem]">
+            En línea
+          </p>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
+            Sitios que ya están publicados. Pasa el cursor por la foto, o tócala en el celular, para abrir la vista previa.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="mt-8 flex max-w-full flex-wrap items-center justify-center gap-x-6 gap-y-3 rounded-full border border-white/10 bg-black/40 px-6 py-3 backdrop-blur-md">
             {categories.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setFilter(cat.value)}
-                className={`skew-x-[-8deg] px-4 py-2 font-impact text-base uppercase italic tracking-tighter transition-colors md:px-6 md:text-lg ${
-                  filter === cat.value
-                  ? 'bg-red-marvel text-white'
-                  : 'text-white/40 hover:text-white'
+                className={`relative font-impact text-xs uppercase tracking-[0.2em] transition-colors ${
+                  filter === cat.value ? 'text-white' : 'text-white/50 hover:text-white'
                 }`}
               >
                 {cat.label}
+                <span className={`absolute -bottom-2 left-0 h-0.5 bg-red-marvel transition-all ${filter === cat.value ? 'w-full' : 'w-0'}`} />
               </button>
             ))}
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => {
               const openProject = () => {
@@ -90,12 +96,6 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
                 }
               };
 
-              const beats: [string, string, string][] = [
-                ['01', 'Problema', project.problem],
-                ['02', 'Trabajo', project.work],
-                ...(project.outcome ? [['03', 'Resultado', project.outcome] as [string, string, string]] : []),
-              ];
-
               return (
                 <motion.article
                   layout
@@ -103,17 +103,8 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="group flex h-full flex-col overflow-hidden border border-white/10 bg-black transition-colors duration-300 hover:border-red-marvel/70"
+                  className="group flex h-full flex-col"
                 >
-                  <div className="flex h-9 shrink-0 items-center justify-between border-b border-white/10 px-4">
-                    <div className="flex items-center gap-1.5" aria-hidden="true">
-                      <span className="h-2 w-2 rounded-full bg-red-marvel"></span>
-                      <span className="h-2 w-2 rounded-full bg-white/20"></span>
-                      <span className="h-2 w-2 rounded-full bg-white/20"></span>
-                    </div>
-                    <span className="font-impact text-[10px] uppercase tracking-[0.35em] text-white/40">{project.category}</span>
-                  </div>
-
                   <button
                     type="button"
                     onClick={openProject}
@@ -121,55 +112,49 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
                     className="relative aspect-[16/10] shrink-0 overflow-hidden"
                   >
                     <ProjectThumb project={project} />
-                    <span className="absolute bottom-3 left-3 skew-x-[-8deg] bg-white px-3 py-1.5 font-impact text-[11px] uppercase italic tracking-tighter text-black shadow-[3px_3px_0_rgba(0,0,0,0.55)] md:hidden">
-                      Vista previa
+                    <span className="absolute bottom-4 left-4 skew-x-[-12deg] bg-white px-3 py-1.5 font-impact text-sm uppercase italic tracking-tighter text-black shadow-[6px_6px_0_rgba(255,255,255,0.15)] md:hidden">
+                      Vista previa &gt;
                     </span>
-                    <span className="absolute inset-0 hidden items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100">
-                      <span className="skew-x-[-8deg] bg-white px-5 py-2.5 font-impact text-lg uppercase italic tracking-tighter text-black">
-                        Vista previa
+                    <span className="absolute inset-0 hidden items-center justify-center bg-black/55 opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100">
+                      <span className="skew-x-[-12deg] bg-white px-6 py-3 font-impact text-2xl uppercase italic tracking-tighter text-black shadow-[8px_8px_0_rgba(255,255,255,0.15)]">
+                        Vista previa &gt;
                       </span>
                     </span>
                   </button>
 
-                  <div className="flex flex-1 flex-col px-4 py-4 md:px-5">
-                    <h3 className="font-impact text-2xl uppercase italic leading-[0.9] tracking-tighter text-white sm:text-3xl">
+                  <div className="mt-3 flex min-h-[4.5rem] items-stretch">
+                    <h3 className="flex flex-1 items-center bg-white px-3 py-2 font-impact text-xl uppercase italic leading-[0.9] tracking-tighter text-black sm:text-2xl">
                       {project.name}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/70">{project.shortDescription}</p>
-
-                    <ol className="mt-4 flex flex-col gap-2">
-                      {beats.map(([index, label, text]) => (
-                        <li key={index} className="grid grid-cols-[1.35rem_1fr] items-baseline gap-2">
-                          <span className="font-impact text-xs italic text-red-marvel">{index}</span>
-                          <p className="text-sm leading-snug text-white/70">
-                            <span className="mr-1.5 font-impact text-sm uppercase tracking-tighter text-white/40">{label}</span>
-                            {text}
-                          </p>
-                        </li>
-                      ))}
-                    </ol>
-
-                    <p className="mt-4 border-t border-white/10 pt-3 font-impact text-[11px] uppercase tracking-tighter text-white/35">
-                      {project.techStack.join(' · ')}
-                    </p>
+                    <span className="flex w-[5.75rem] shrink-0 items-center justify-center bg-red-marvel px-2 text-center font-impact text-[11px] uppercase italic leading-[0.9] tracking-tighter text-white">
+                      {project.category}
+                    </span>
                   </div>
+                  <p className="mt-4 text-sm leading-relaxed text-white/70">{project.shortDescription}</p>
+                  <p className="mt-auto pt-4 font-impact text-[10px] uppercase tracking-[0.22em] text-white/45">
+                    {project.techStack.join(' · ')}
+                  </p>
                 </motion.article>
               );
             })}
           </AnimatePresence>
         </div>
 
-        <div className="mt-16 flex flex-col items-start gap-6 border-t border-white/10 pt-10">
-          <p className="font-impact text-4xl uppercase italic leading-none tracking-tighter text-white md:text-6xl">
-            ¿Quieres una web<br /><span className="text-red-marvel">como estas?</span>
+        <div className="mt-20 flex flex-col items-center gap-8 text-center">
+          <p className="font-impact text-5xl uppercase leading-[0.8] tracking-tighter text-white md:text-7xl">
+            ¿Quieres una web<br />
+            <span className="marvel-text-outline">como estas?</span>
           </p>
           <a
             href="https://wa.me/51936068781?text=Hola%20Daniel%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-red-marvel px-6 py-3 font-impact text-lg uppercase italic tracking-tighter text-white skew-x-[-8deg]"
+            className="group relative"
           >
-            Escríbeme por WhatsApp
+            <span className="absolute inset-0 bg-red-marvel opacity-20 blur-2xl transition-opacity group-hover:opacity-40" />
+            <span className="relative block skew-x-[-12deg] bg-red-marvel px-8 py-4 font-impact text-2xl uppercase italic tracking-tighter text-white shadow-[10px_10px_0_rgba(255,255,255,0.1)] transition-transform hover:scale-105 md:px-12 md:text-3xl">
+              Escríbeme por WhatsApp &gt;
+            </span>
           </a>
         </div>
       </div>

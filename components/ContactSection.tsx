@@ -57,11 +57,12 @@ const ContactSection: React.FC = () => {
             </h2>
             
             <p className="text-zinc-500 text-lg max-w-md">
-              Cuéntame tu proyecto. Te respondo yo, por WhatsApp, en menos de 24 horas.
+              Cuéntame tu proyecto. Estoy en Lima, trabajo con todo el Perú y atiendo las 24 horas, los 7 días.
             </p>
 
             <div className="space-y-6">
-              <h4 className="text-white font-bold uppercase tracking-wider text-sm">Respuesta en menos de 24 horas</h4>
+              <h4 className="text-white font-bold uppercase tracking-wider text-sm">Atiendo las 24 horas, los 7 días</h4>
+              <h4 className="text-white font-bold uppercase tracking-wider text-sm">Pago con Yape, Plin o transferencia</h4>
               <div>
                 <h4 className="text-white font-bold uppercase tracking-wider text-sm">¿Es urgente? Escríbeme directo por WhatsApp</h4>
                 <a

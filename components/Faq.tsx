@@ -3,7 +3,11 @@ import React from 'react';
 const questions = [
   {
     q: '¿Cuánto cuesta una página web en Lima?',
-    a: 'No hay un precio único. Una página simple no cuesta lo mismo que una tienda o una aplicación. El monto se define después de escuchar qué necesita el negocio, sin compromiso.',
+    a: 'El precio va de S/ 300 a S/ 15 000. Una página simple está cerca del inicio; una tienda o una aplicación con más pantallas sube. El monto exacto depende de la complejidad y se confirma por WhatsApp, sin compromiso.',
+  },
+  {
+    q: '¿Cómo puedo pagar?',
+    a: 'Puedes pagar con Yape, Plin o transferencia. Lo coordinamos al cerrar la cotización.',
   },
   {
     q: '¿Cuánto tarda en estar lista?',
@@ -14,8 +18,12 @@ const questions = [
     a: 'El sitio puede quedar publicado y el dominio se puede gestionar en el mismo trabajo. Si ya tienes dominio o hosting, se usa el tuyo. Eso se aclara en la cotización.',
   },
   {
+    q: '¿Atiendes solo en Lima?',
+    a: 'Estoy en Lima y trabajo a distancia con negocios de todo el Perú. No hace falta reunirnos para empezar.',
+  },
+  {
     q: '¿Cómo cotizo por WhatsApp?',
-    a: 'Escribe al 936 068 781 o usa el botón de esta página. Cuenta el negocio y qué necesitas. La respuesta llega en menos de 24 horas.',
+    a: 'Escribe al 936 068 781 o usa el botón de esta página. Cuento el negocio y qué necesitas. Atiendo las 24 horas, los 7 días de la semana.',
   },
 ];
 

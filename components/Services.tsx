@@ -9,7 +9,7 @@ const services = [
   {
     n: '02',
     title: 'Aplicaciones web a medida',
-    text: 'Si necesitas cuentas, pedidos o un panel interno, lo armo con Next.js, TypeScript y Supabase. El flujo sigue cómo trabaja tu negocio, no una plantilla genérica.',
+    text: 'Si necesitas cuentas, pedidos o un panel para ver tus ventas, lo armo a la medida de cómo trabaja tu negocio. No es una plantilla genérica.',
   },
   {
     n: '03',
@@ -32,6 +32,9 @@ const Services: React.FC = () => {
           <h2 className="font-impact text-5xl uppercase italic leading-[0.85] tracking-tighter text-white md:text-7xl">
             Servicios de desarrollo web <span className="text-red-marvel">en Lima</span>
           </h2>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-white md:text-lg">
+            Para negocios de Lima y de todo el Perú. El precio va de S/ 300 a S/ 15 000, según lo que haya que construir. Se paga con Yape, Plin o transferencia.
+          </p>
         </header>
 
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">

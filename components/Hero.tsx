@@ -10,19 +10,6 @@ const Hero: React.FC = () => {
     }
   };
 
-  const techStack = [
-    { name: 'RE', label: 'React' },
-    { name: 'NO', label: 'Node.js' },
-    { name: 'FI', label: 'Figma' },
-    { name: 'GI', label: 'Git' },
-    { name: 'TW', label: 'Tailwind' },
-    { name: 'TS', label: 'TypeScript' },
-    { name: 'JS', label: 'JavaScript' },
-    { name: 'NX', label: 'Next.js' },
-    { name: 'DB', label: 'Database' },
-    { name: 'DK', label: 'Docker' },
-  ];
-
   return (
     <section id="inicio" className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
       <h1 className="sr-only">Daniel Gonzales — Desarrollador Web Full Stack en Lima</h1>
@@ -74,7 +61,7 @@ const Hero: React.FC = () => {
               WEB FULLSTACK
             </div>
             <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
-              Desarrollador web full stack en Lima, Perú. Creo páginas web, tiendas online y aplicaciones a medida para negocios.
+              Hago páginas web, tiendas online y aplicaciones para negocios. Estoy en Lima y también trabajo a distancia, en todo el Perú.
             </p>
           </motion.div>
         </div>
@@ -103,20 +90,7 @@ const Hero: React.FC = () => {
 
           {/* Centro: Tech Stack + Botón */}
           <div className="flex flex-col items-center gap-6 w-full md:w-auto">
-            <div className="flex flex-wrap justify-center gap-2 items-center max-w-[280px] md:max-w-none">
-              {techStack.map((tech, i) => (
-                <motion.div 
-                  key={tech.name}
-                  whileHover={{ scale: 1.2, borderColor: '#E23636' }}
-                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full border flex items-center justify-center transition-all ${
-                    i === 0 || i === 3 || i === 6 || i === 9 ? 'border-red-marvel bg-red-marvel/10' : 'border-white/20'
-                  }`}
-                >
-                  <span className="font-impact text-[10px] text-white/80">{tech.name}</span>
-                </motion.div>
-              ))}
-            </div>
-            
+            <p className="text-center text-[10px] font-black uppercase tracking-[0.35em] text-white/70 md:hidden">24 horas, los 7 días · Lima y todo el Perú</p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button 
                 onClick={handleScroll}
@@ -143,8 +117,8 @@ const Hero: React.FC = () => {
 
           {/* Info Derecha */}
           <div className="hidden md:block text-right pb-4 pr-24">
-            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Respuesta rápida</p>
-            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">En menos de 24 h</h4>
+            <p className="text-red-marvel font-black text-[10px] uppercase tracking-[0.5em] mb-1">Horario</p>
+            <h4 className="text-white font-impact text-4xl uppercase tracking-tighter">24 horas, 7 días</h4>
           </div>
 
         </div>

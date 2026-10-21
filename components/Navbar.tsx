@@ -134,9 +134,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden shrink-0 items-center gap-1.5 bg-red-marvel px-4 py-2 font-impact text-xs uppercase italic tracking-tighter text-white skew-x-[-8deg] lg:inline-flex"
+            className="hidden shrink-0 items-center gap-2 bg-red-marvel px-5 py-2.5 font-impact text-sm uppercase italic tracking-tighter text-white skew-x-[-8deg] lg:inline-flex"
           >
-            <WhatsAppMark className="h-3.5 w-3.5 shrink-0 skew-x-[8deg] fill-current" />
+            <WhatsAppMark className="h-5 w-5 shrink-0 skew-x-[8deg] fill-current" />
             <span className="skew-x-[8deg]">Contáctame</span>
           </a>
           
@@ -145,9 +145,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch, onViewChange }) => {
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-1 bg-red-marvel px-2.5 py-1.5 font-impact text-[10px] uppercase italic tracking-tighter text-white skew-x-[-8deg] sm:px-4 sm:text-xs lg:hidden"
+              className="inline-flex shrink-0 items-center gap-1.5 bg-red-marvel px-3 py-2 font-impact text-xs uppercase italic tracking-tighter text-white skew-x-[-8deg] sm:px-5 sm:py-2.5 sm:text-sm lg:hidden"
             >
-              <WhatsAppMark className="h-3 w-3 shrink-0 skew-x-[8deg] fill-current" />
+              <WhatsAppMark className="h-4 w-4 shrink-0 skew-x-[8deg] fill-current" />
               <span className="skew-x-[8deg]">Contáctame</span>
             </a>
             <AnimatePresence>
