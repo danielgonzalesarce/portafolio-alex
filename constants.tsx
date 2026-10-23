@@ -2,18 +2,32 @@ import { Client, Project } from './types';
 
 export const PROJECTS: Project[] = [
   {
-    id: '1',
-    name: "Maison d'Or Repostería",
-    shortDescription: 'Maison d\'Or no tenía una carta pública de su repostería. El catálogo quedó publicado para que vean los productos sin llamar.',
-    problem: 'La pastelería no tenía un catálogo público para mostrar sus productos.',
-    work: 'Publiqué un sitio con la carta de la repostería artesanal.',
+    id: '8',
+    name: 'Ritual Coffee',
+    shortDescription: 'Ritual Coffee no tenía una carta pública de su café, crepes y waffles. El sitio muestra lo más pedido y deja pedirlo por WhatsApp desde Santa Anita.',
+    problem: 'La cafetería no tenía una carta en línea para mostrar sus productos ni recibir pedidos.',
+    work: 'Publiqué el sitio con la carta, la ubicación en Santa Anita y el pedido por WhatsApp.',
     category: 'Web',
-    slug: 'maison-dor',
-    thumbnail: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1400&q=80',
+    slug: 'ritual-coffee',
+    thumbnail: '/projects/ritual-coffee.png',
     demoType: 'IFRAME',
-    techStack: ['HTML', 'CSS', 'JS'],
-    liveUrl: 'https://danielgonzalesarce.github.io/reposteria-/',
-    githubUrl: 'https://github.com/danielgonzalesarce/reposteria-'
+    techStack: ['Next.js', 'React'],
+    liveUrl: 'https://ritual-coffee.vercel.app/',
+    githubUrl: ''
+  },
+  {
+    id: '1',
+    name: 'Studio Paucolor',
+    shortDescription: 'Studio Paucolor no tenía una página para mostrar uñas, maquillaje y peinado ni para reservar. El sitio publica los servicios y deja agendar la cita por WhatsApp.',
+    problem: 'El estudio no tenía un sitio para mostrar sus servicios ni recibir reservas.',
+    work: 'Publiqué la página con el catálogo de estética y la reserva por WhatsApp.',
+    category: 'Web',
+    slug: 'studio-paucolor',
+    thumbnail: '/projects/studio-paucolor.png',
+    demoType: 'IFRAME',
+    techStack: ['Next.js', 'React'],
+    liveUrl: 'https://paucolor-web.vercel.app/',
+    githubUrl: ''
   },
   {
     id: '2',
