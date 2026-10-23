@@ -30,20 +30,6 @@ export const PROJECTS: Project[] = [
     githubUrl: ''
   },
   {
-    id: '2',
-    name: "Florería Magaly",
-    shortDescription: 'Florería Magaly recibía encargos solo por teléfono. El catálogo deja ver los arreglos y pedir sin depender de una llamada.',
-    problem: 'Los encargos dependían del teléfono, sin un catálogo para elegir.',
-    work: 'Armé un catálogo en línea para ver arreglos y encargar.',
-    category: 'Web',
-    slug: 'floreria-magaly',
-    thumbnail: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=1400&q=80',
-    demoType: 'IFRAME',
-    techStack: ['Web'],
-    liveUrl: 'https://floreria-magaly-g3kq.vercel.app/',
-    githubUrl: ''
-  },
-  {
     id: '3',
     name: "Lumina Hotel & Spa",
     shortDescription: 'Lumina Hotel & Spa es un proyecto propio para mostrar habitaciones y reservas juntas. La plataforma quedó publicada con React y Firebase.',
@@ -51,7 +37,7 @@ export const PROJECTS: Project[] = [
     work: 'Construí la plataforma de reservas y servicios con React y Firebase.',
     category: 'Proyecto propio',
     slug: 'lumina-hotel',
-    thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
+    thumbnail: '/projects/lumina-hotel.png',
     demoType: 'IFRAME',
     techStack: ['React', 'Firebase'],
     liveUrl: 'https://lumina-hotel-spa.vercel.app/',
@@ -65,7 +51,7 @@ export const PROJECTS: Project[] = [
     work: 'Desarrollé el sitio corporativo para ordenar servicios y contacto.',
     category: 'Web',
     slug: 'portafolio-jb',
-    thumbnail: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80',
+    thumbnail: '/projects/portafolio-jb.png',
     demoType: 'IFRAME',
     techStack: ['React', 'Next.js'],
     liveUrl: 'https://portafoliojb-empresa-g1qz.vercel.app/',
@@ -79,7 +65,7 @@ export const PROJECTS: Project[] = [
     work: 'Monté el comercio con catálogo y flujo de compra.',
     category: 'E-commerce',
     slug: 'luxe-tech',
-    thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80',
+    thumbnail: '/projects/luxe-tech.png',
     demoType: 'IFRAME',
     techStack: ['React', 'Node.js'],
     liveUrl: 'https://luxe-tech-e-commerce-premium-lima.vercel.app/',
@@ -93,7 +79,7 @@ export const PROJECTS: Project[] = [
     work: 'Diseñé y publiqué el sitio de la línea metalmecánica.',
     category: 'Web',
     slug: 'aceros-marin',
-    thumbnail: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1400&q=80',
+    thumbnail: '/projects/aceros-marin.png',
     demoType: 'IFRAME',
     techStack: ['React'],
     liveUrl: 'https://aceros-marin.vercel.app/',
@@ -102,16 +88,17 @@ export const PROJECTS: Project[] = [
   {
     id: '7',
     name: "Go Gym",
-    shortDescription: 'Go Gym no tenía una página para explicar planes y entrenamiento. El sitio ya muestra esa información a quien busca el gimnasio.',
+    shortDescription: 'Go Gym todavía no tiene lista la página de planes y entrenamiento. El sitio sigue en proceso de desarrollo.',
     problem: 'El gimnasio no tenía una página para mostrar planes y entrenamiento.',
-    work: 'Desarrollé el sitio para presentar esa información.',
+    work: 'El sitio está en proceso de desarrollo para presentar esa información.',
     category: 'Web',
     slug: 'go-gym',
-    thumbnail: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=80',
+    thumbnail: '/projects/go-gym.png',
     demoType: 'IFRAME',
     techStack: ['React'],
     liveUrl: 'https://go-gym-nine.vercel.app/',
-    githubUrl: ''
+    githubUrl: '',
+    inDevelopment: true
   }
 ];
 

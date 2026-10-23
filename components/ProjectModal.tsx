@@ -44,11 +44,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <p className="text-white font-bold text-sm tracking-tight">{project.name}</p>
-                <span className="bg-red-marvel/10 text-red-marvel text-[9px] font-black px-1.5 py-0.5 rounded border border-red-marvel/20 uppercase tracking-tighter italic">DEMO_LIVE</span>
+                <span className="bg-red-marvel/10 text-red-marvel text-[9px] font-black px-1.5 py-0.5 rounded border border-red-marvel/20 uppercase tracking-tighter italic">{project.inDevelopment ? 'EN DESARROLLO' : 'DEMO_LIVE'}</span>
               </div>
               <div className="flex items-center gap-2 mt-0.5">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-                <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Estado: Desplegado</span>
+                <div className={`w-1.5 h-1.5 rounded-full ${project.inDevelopment ? 'bg-red-marvel shadow-[0_0_8px_rgba(255,34,34,0.6)]' : 'bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]'}`}></div>
+                <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">{project.inDevelopment ? 'Estado: En desarrollo' : 'Estado: Desplegado'}</span>
               </div>
             </div>
           </div>

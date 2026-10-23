@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Globe } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project, ProjectCategory } from '../types';
 
@@ -30,7 +31,7 @@ const ProjectThumb: React.FC<{ project: Project }> = ({ project }) => {
       width={1400}
       height={875}
       loading="lazy"
-      className="h-full w-full object-cover transition-transform duration-700 md:group-hover:scale-[1.04]"
+      className="h-full w-full object-cover"
       onError={() => {
         if (index < sources.length - 1) setIndex((current) => current + 1);
       }}
@@ -66,26 +67,27 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
             En línea
           </p>
           <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
-            Sitios que ya están publicados. Pasa el cursor por la foto, o tócala en el celular, para abrir la vista previa.
+            Sitios que ya están publicados. Toca una tarjeta para abrir la vista previa.
           </p>
 
-          <div className="mt-8 flex max-w-full flex-wrap items-center justify-center gap-x-6 gap-y-3 rounded-full border border-white/10 bg-black/40 px-6 py-3 backdrop-blur-md">
+          <div className="mt-8 flex max-w-full flex-wrap items-center justify-center gap-x-6 gap-y-3">
             {categories.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setFilter(cat.value)}
-                className={`relative font-impact text-xs uppercase tracking-[0.2em] transition-colors ${
-                  filter === cat.value ? 'text-white' : 'text-white/50 hover:text-white'
+                className={`text-[11px] font-bold uppercase tracking-[0.16em] transition-colors ${
+                  filter === cat.value
+                    ? 'rounded-full bg-[#ff2222] px-4 py-1.5 text-white'
+                    : 'px-1 py-1.5 text-white/55 hover:text-white'
                 }`}
               >
                 {cat.label}
-                <span className={`absolute -bottom-2 left-0 h-0.5 bg-red-marvel transition-all ${filter === cat.value ? 'w-full' : 'w-0'}`} />
               </button>
             ))}
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-[1120px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => {
               const openProject = () => {
@@ -100,40 +102,45 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ onProjectSelect, searchQuery 
                 <motion.article
                   layout
                   key={project.id}
+                  role="button"
+                  tabIndex={0}
+                  onClick={openProject}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      openProject();
+                    }
+                  }}
+                  aria-label={`Vista previa de ${project.name}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="group flex h-full flex-col"
+                  className="group flex h-full cursor-pointer flex-col rounded-[22px] border border-[#ff2a2a] bg-[#090909] p-3 shadow-[0_0_14px_rgba(255,34,34,0.28)]"
                 >
-                  <button
-                    type="button"
-                    onClick={openProject}
-                    aria-label={`Vista previa de ${project.name}`}
-                    className="relative aspect-[16/10] shrink-0 overflow-hidden"
-                  >
+                  <div className="relative aspect-[16/10] shrink-0 overflow-hidden rounded-[14px]">
                     <ProjectThumb project={project} />
-                    <span className="absolute bottom-4 left-4 skew-x-[-12deg] bg-white px-3 py-1.5 font-impact text-sm uppercase italic tracking-tighter text-black shadow-[6px_6px_0_rgba(255,255,255,0.15)] md:hidden">
-                      Vista previa &gt;
-                    </span>
-                    <span className="absolute inset-0 hidden items-center justify-center bg-black/55 opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100">
-                      <span className="skew-x-[-12deg] bg-white px-6 py-3 font-impact text-2xl uppercase italic tracking-tighter text-black shadow-[8px_8px_0_rgba(255,255,255,0.15)]">
-                        Vista previa &gt;
+                    {project.inDevelopment && (
+                      <span className="absolute left-3 top-3 rounded-full bg-[#ff2222] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+                        En desarrollo
                       </span>
-                    </span>
-                  </button>
+                    )}
+                  </div>
 
-                  <div className="mt-3 flex min-h-[4.5rem] items-stretch">
-                    <h3 className="flex flex-1 items-center bg-white px-3 py-2 font-impact text-xl uppercase italic leading-[0.9] tracking-tighter text-black sm:text-2xl">
+                  <div className="flex flex-1 flex-col px-1.5 pb-1 pt-4">
+                    <h3 className="text-lg font-black uppercase leading-none tracking-[0.03em] text-white">
                       {project.name}
                     </h3>
-                    <span className="flex w-[5.75rem] shrink-0 items-center justify-center bg-red-marvel px-2 text-center font-impact text-[11px] uppercase italic leading-[0.9] tracking-tighter text-white">
-                      {project.category}
-                    </span>
+                    <p className="mt-2.5 text-[13px] leading-relaxed text-zinc-400">{project.shortDescription}</p>
+                    <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/15 pt-3">
+                      <p className="flex min-w-0 items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                        <Globe className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden="true" />
+                        <span className="truncate">{project.techStack.join(' · ')}</span>
+                      </p>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ff2222] text-white">
+                        <ArrowRight className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
+                      </span>
+                    </div>
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-white/70">{project.shortDescription}</p>
-                  <p className="mt-auto pt-4 font-impact text-[10px] uppercase tracking-[0.22em] text-white/45">
-                    {project.techStack.join(' · ')}
-                  </p>
                 </motion.article>
               );
             })}

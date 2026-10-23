@@ -16,6 +16,7 @@ export interface Project {
   liveUrl?: string; // URL de Vercel/GitHub Pages
   githubUrl?: string;
   openInNewTab?: boolean;
+  inDevelopment?: boolean;
 }
 
 export interface Client {
